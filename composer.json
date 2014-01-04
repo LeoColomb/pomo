@@ -1,0 +1,13 @@
+{
+    "name": "pomo/pomo",
+    "type": "library",
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "WordPress",
+        }
+    ],
+    "autoload": {
+        "psr-0": {"pomo": "src/"}
+    },
+}
