@@ -14,7 +14,7 @@ class Reader {
 	var $endian = 'little';
 	var $_post = '';
 
-	function Reader() {
+	function __construct() {
 		$this->is_overloaded = ((ini_get("mbstring.func_overload") & 2) != 0) && function_exists('mb_substr');
 		$this->_pos = 0;
 	}

@@ -13,8 +13,8 @@ namespace POMO\Streams;
  * Reads the contents of the file in the beginning.
  */
 class CachedFileReader extends StringReader {
-	function CachedFileReader($filename) {
-		parent::StringReader();
+	function __construct($filename) {
+		parent::__construct();
 		$this->_str = file_get_contents($filename);
 		if (false === $this->_str)
 			return false;

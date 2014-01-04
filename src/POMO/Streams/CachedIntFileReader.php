@@ -13,7 +13,7 @@ namespace POMO\Streams;
  * Reads the contents of the file in the beginning.
  */
 class CachedIntFileReader extends CachedFileReader {
-	function CachedIntFileReader($filename) {
-		parent::CachedFileReader($filename);
+	function __construct($filename) {
+		parent::__construct($filename);
 	}
 }

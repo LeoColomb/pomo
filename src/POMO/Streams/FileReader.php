@@ -10,8 +10,8 @@
 namespace POMO\Streams;
 
 class FileReader extends Reader {
-	function FileReader($filename) {
-		parent::Reader();
+	function __construct($filename) {
+		parent::__construct();
 		$this->_f = fopen($filename, 'rb');
 	}
 

@@ -17,8 +17,8 @@ class StringReader extends Reader {
 
 	var $_str = '';
 
-	function StringReader($str = '') {
-		parent::Reader();
+	function __construct($str = '') {
+		parent::__construct();
 		$this->_str = $str;
 		$this->_pos = 0;
 	}

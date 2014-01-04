@@ -40,7 +40,7 @@ class TranslationEntry {
 	 * 	- references (array) -- places in the code this strings is used, in relative_to_root_path/file.php:linenum form
 	 * 	- flags (array) -- flags like php-format
 	 */
-	function TranslationEntry($args=array()) {
+	function __construct($args=array()) {
 		// if no singular -- empty object
 		if (!isset($args['singular'])) {
 			return;
