@@ -6,8 +6,8 @@
  * @package pomo
  * @subpackage entry
  */
+namespace POMO;
 
-if ( !class_exists( 'Translation_Entry' ) ):
 /**
  * Translation_Entry class encapsulates a translatable string
  */
@@ -75,4 +75,3 @@ class Translation_Entry {
 
 	}
 }
-endif;

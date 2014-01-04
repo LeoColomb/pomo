@@ -6,17 +6,14 @@
  * @package pomo
  * @subpackage po
  */
-
-require_once dirname(__FILE__) . '/translations.php';
+namespace POMO;
 
 define('PO_MAX_LINE_LEN', 79);
-
 ini_set('auto_detect_line_endings', 1);
 
 /**
  * Routines for working with PO files
  */
-if ( !class_exists( 'PO' ) ):
 class PO extends Gettext_Translations {
 
 	var $comments_before_headers = '';
@@ -381,4 +378,3 @@ class PO extends Gettext_Translations {
 		return $s;
 	}
 }
-endif;

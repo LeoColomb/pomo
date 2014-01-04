@@ -8,6 +8,6 @@
         }
     ],
     "autoload": {
-        "psr-0": {"pomo": "src/"}
+        "psr-0": {"POMO": "src/"}
     }
 }

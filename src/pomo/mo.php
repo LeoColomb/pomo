@@ -6,11 +6,8 @@
  * @package pomo
  * @subpackage mo
  */
+namespace POMO;
 
-require_once dirname(__FILE__) . '/translations.php';
-require_once dirname(__FILE__) . '/streams.php';
-
-if ( !class_exists( 'MO' ) ):
 class MO extends Gettext_Translations {
 
 	var $_nplurals = 2;
@@ -21,7 +18,7 @@ class MO extends Gettext_Translations {
 	 * @param string $filename MO file to load
 	 */
 	function import_from_file($filename) {
-		$reader = new POMO_FileReader($filename);
+		$reader = new FileReader($filename);
 		if (!$reader->is_resource())
 			return false;
 		return $this->import_from_reader($reader);
@@ -254,4 +251,3 @@ class MO extends Gettext_Translations {
 		return $this->_nplurals;
 	}
 }
-endif;
