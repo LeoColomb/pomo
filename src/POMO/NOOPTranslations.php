@@ -11,7 +11,7 @@ namespace POMO;
 /**
  * Provides the same interface as Translations, but doesn't do anything
  */
-class NOOP_Translations {
+class NOOPTranslations {
 	var $entries = array();
 	var $headers = array();
 

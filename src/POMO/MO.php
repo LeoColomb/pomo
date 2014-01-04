@@ -8,7 +8,9 @@
  */
 namespace POMO;
 
-class MO extends Gettext_Translations {
+use POMO\Streams\FileReader;
+
+class MO extends GettextTranslations {
 
 	var $_nplurals = 2;
 
@@ -214,7 +216,7 @@ class MO extends Gettext_Translations {
 	}
 
 	/**
-	 * Build a Translation_Entry from original string and translation strings,
+	 * Build a TranslationEntry from original string and translation strings,
 	 * found in a MO file
 	 *
 	 * @static
@@ -224,7 +226,7 @@ class MO extends Gettext_Translations {
 	 * 	0x00 as a plural translations separator
 	 */
 	function &make_entry($original, $translation) {
-		$entry = new Translation_Entry();
+		$entry = new TranslationEntry();
 		// look for context
 		$parts = explode(chr(4), $original);
 		if (isset($parts[1])) {

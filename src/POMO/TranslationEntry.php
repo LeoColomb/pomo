@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains Translation_Entry class
+ * Contains TranslationEntry class
  *
  * @version $Id: entry.php 718 2012-10-31 00:32:02Z nbachiyski $
  * @package pomo
@@ -9,9 +9,9 @@
 namespace POMO;
 
 /**
- * Translation_Entry class encapsulates a translatable string
+ * TranslationEntry class encapsulates a translatable string
  */
-class Translation_Entry {
+class TranslationEntry {
 
 	/**
 	 * Whether the entry contains a string and its plural form, default is false
@@ -40,7 +40,7 @@ class Translation_Entry {
 	 * 	- references (array) -- places in the code this strings is used, in relative_to_root_path/file.php:linenum form
 	 * 	- flags (array) -- flags like php-format
 	 */
-	function Translation_Entry($args=array()) {
+	function TranslationEntry($args=array()) {
 		// if no singular -- empty object
 		if (!isset($args['singular'])) {
 			return;

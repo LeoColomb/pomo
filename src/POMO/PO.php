@@ -14,7 +14,7 @@ ini_set('auto_detect_line_endings', 1);
 /**
  * Routines for working with PO files
  */
-class PO extends Gettext_Translations {
+class PO extends GettextTranslations {
 
 	var $comments_before_headers = '';
 
@@ -236,7 +236,7 @@ class PO extends Gettext_Translations {
 	}
 
 	function read_entry($f, $lineno = 0) {
-		$entry = new Translation_Entry();
+		$entry = new TranslationEntry();
 		// where were we in the last step
 		// can be: comment, msgctxt, msgid, msgid_plural, msgstr, msgstr_plural
 		$context = '';

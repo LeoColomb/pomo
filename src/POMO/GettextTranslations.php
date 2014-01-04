@@ -8,7 +8,7 @@
  */
 namespace POMO;
 
-class Gettext_Translations extends Translations {
+class GettextTranslations extends Translations {
 	/**
 	 * The gettext implementation of select_plural_form.
 	 *

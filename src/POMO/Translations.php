@@ -20,7 +20,7 @@ class Translations {
 	 */
 	function add_entry($entry) {
 		if (is_array($entry)) {
-			$entry = new Translation_Entry($entry);
+			$entry = new TranslationEntry($entry);
 		}
 		$key = $entry->key();
 		if (false === $key) return false;
@@ -30,7 +30,7 @@ class Translations {
 
 	function add_entry_or_merge($entry) {
 		if (is_array($entry)) {
-			$entry = new Translation_Entry($entry);
+			$entry = new TranslationEntry($entry);
 		}
 		$key = $entry->key();
 		if (false === $key) return false;
@@ -71,7 +71,7 @@ class Translations {
 	}
 
 	function translate($singular, $context=null) {
-		$entry = new Translation_Entry(array('singular' => $singular, 'context' => $context));
+		$entry = new TranslationEntry(array('singular' => $singular, 'context' => $context));
 		$translated = $this->translate_entry($entry);
 		return ($translated && !empty($translated->translations))? $translated->translations[0] : $singular;
 	}
@@ -96,7 +96,7 @@ class Translations {
 	}
 
 	function translate_plural($singular, $plural, $count, $context = null) {
-		$entry = new Translation_Entry(array('singular' => $singular, 'plural' => $plural, 'context' => $context));
+		$entry = new TranslationEntry(array('singular' => $singular, 'plural' => $plural, 'context' => $context));
 		$translated = $this->translate_entry($entry);
 		$index = $this->select_plural_form($count);
 		$total_plural_forms = $this->get_plural_forms_count();
