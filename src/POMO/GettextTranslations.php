@@ -1,13 +1,18 @@
 <?php
+/*
+ * This file is part of the POMO package.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+ namespace POMO;
+
 /**
  * Class for a set of entries for translation and their associated headers
  *
- * @version $Id: translations.php 718 2012-10-31 00:32:02Z nbachiyski $
- * @package pomo
- * @subpackage translations
+ * @package POMO
  */
-namespace POMO;
-
 class GettextTranslations extends Translations {
 	/**
 	 * The gettext implementation of select_plural_form.

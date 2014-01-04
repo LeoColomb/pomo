@@ -1,18 +1,20 @@
 <?php
-/**
- * Class for working with PO files
+/*
+ * This file is part of the POMO package.
  *
- * @version $Id: po.php 718 2012-10-31 00:32:02Z nbachiyski $
- * @package pomo
- * @subpackage po
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 namespace POMO;
 
 define('PO_MAX_LINE_LEN', 79);
 ini_set('auto_detect_line_endings', 1);
 
 /**
- * Routines for working with PO files
+ * Class for working with PO files
+ *
+ * @package POMO
  */
 class PO extends GettextTranslations {
 

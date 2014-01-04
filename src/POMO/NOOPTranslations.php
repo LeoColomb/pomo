@@ -1,15 +1,17 @@
 <?php
-/**
- * Class for a set of entries for translation and their associated headers
+/*
+ * This file is part of the POMO package.
  *
- * @version $Id: translations.php 718 2012-10-31 00:32:02Z nbachiyski $
- * @package pomo
- * @subpackage translations
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 namespace POMO;
 
 /**
  * Provides the same interface as Translations, but doesn't do anything
+ *
+ * @package POMO
  */
 class NOOPTranslations {
 	var $entries = array();

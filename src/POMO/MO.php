@@ -1,15 +1,20 @@
 <?php
-/**
- * Class for working with MO files
+/*
+ * This file is part of the POMO package.
  *
- * @version $Id: mo.php 718 2012-10-31 00:32:02Z nbachiyski $
- * @package pomo
- * @subpackage mo
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 namespace POMO;
 
 use POMO\Streams\FileReader;
 
+/**
+ * Class for working with MO files
+ *
+ * @package POMO
+ */
 class MO extends GettextTranslations {
 
 	var $_nplurals = 2;

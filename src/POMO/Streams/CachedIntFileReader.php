@@ -1,16 +1,19 @@
 <?php
-/**
- * Classes, which help reading streams of data from files.
- * Based on the classes from Danilo Segan <danilo@kvota.net>
+/*
+ * This file is part of the POMO package.
  *
- * @version $Id: streams.php 718 2012-10-31 00:32:02Z nbachiyski $
- * @package pomo
- * @subpackage streams
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 namespace POMO\Streams;
 
 /**
  * Reads the contents of the file in the beginning.
+ *
+ * @package POMO
+ * @subpackage Streams
+ * @author Danilo Segan <danilo@kvota.net>
  */
 class CachedIntFileReader extends CachedFileReader {
 	function __construct($filename) {
