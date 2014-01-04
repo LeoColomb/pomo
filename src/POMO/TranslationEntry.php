@@ -1,16 +1,13 @@
 <?php
 /**
  * Contains TranslationEntry class
+ * TranslationEntry class encapsulates a translatable string
  *
- * @version $Id: entry.php 718 2012-10-31 00:32:02Z nbachiyski $
- * @package pomo
+ * @package POMO
  * @subpackage entry
  */
 namespace POMO;
 
-/**
- * TranslationEntry class encapsulates a translatable string
- */
 class TranslationEntry {
 
 	/**
