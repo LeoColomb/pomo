@@ -10,15 +10,13 @@ Usage
 <?php
 require 'vendor/autoload.php';
 
-use POMO\NOOPTranslations;
 use POMO\MO;
 
-$translations = new NOOPTranslations;
+// Create MO object
 $mo = new MO();
 
 // Import MO file
-$mo->import_from_file($the_mo_file);
-$mo->merge_with($translations);
+$mo->import_from_file($the_mo_filepath);
 $translations = &$mo;
 
 // Translate
