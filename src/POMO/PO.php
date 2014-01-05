@@ -8,6 +8,8 @@
 
 namespace POMO;
 
+use POMO\Translations\GettextTranslations;
+
 define('PO_MAX_LINE_LEN', 79);
 ini_set('auto_detect_line_endings', 1);
 

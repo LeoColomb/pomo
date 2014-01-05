@@ -6,12 +6,13 @@
  * file that was distributed with this source code.
  */
 
-namespace POMO;
+namespace POMO\Translations;
 
 /**
  * Provides the same interface as Translations, but doesn't do anything
  *
  * @package POMO
+ * @subpackage Translations
  */
 class NOOPTranslations {
 	var $entries = array();

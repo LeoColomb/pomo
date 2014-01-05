@@ -9,6 +9,7 @@
 namespace POMO;
 
 use POMO\Streams\FileReader;
+use POMO\Translations\GettextTranslations;
 
 /**
  * Class for working with MO files

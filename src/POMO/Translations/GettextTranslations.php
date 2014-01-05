@@ -6,12 +6,13 @@
  * file that was distributed with this source code.
  */
 
- namespace POMO;
+namespace POMO\Translations;
 
 /**
  * Class for a set of entries for translation and their associated headers
  *
  * @package POMO
+ * @subpackage Translations
  */
 class GettextTranslations extends Translations {
 	/**

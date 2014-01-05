@@ -6,12 +6,15 @@
  * file that was distributed with this source code.
  */
 
-namespace POMO;
+namespace POMO\Translations;
+
+use POMO\TranslationEntry;
 
 /**
  * Class for a set of entries for translation and their associated headers
  *
  * @package POMO
+ * @subpackage Translations
  */
 class Translations {
 	var $entries = array();
