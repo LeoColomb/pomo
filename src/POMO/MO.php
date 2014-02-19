@@ -10,6 +10,7 @@ namespace POMO;
 
 use POMO\Streams\FileReader;
 use POMO\Translations\GettextTranslations;
+use POMO\Translations\EntryTranslations;
 
 /**
  * Class for working with MO files
@@ -235,7 +236,7 @@ class MO extends GettextTranslations
     }
 
     /**
-     * Build a TranslationEntry from original string and translation strings,
+     * Build a EntryTranslations from original string and translation strings,
      * found in a MO file
      *
      * @static
@@ -245,7 +246,7 @@ class MO extends GettextTranslations
      *                            0x00 as a plural translations separator
      */
     function &make_entry($original, $translation) {
-        $entry = new TranslationEntry();
+        $entry = new EntryTranslations();
         // look for context
         $parts = explode(chr(4), $original);
         if (isset($parts[1])) {

@@ -9,6 +9,7 @@
 namespace POMO;
 
 use POMO\Translations\GettextTranslations;
+use POMO\Translations\EntryTranslations;
 
 ini_set('auto_detect_line_endings', 1);
 
@@ -258,7 +259,7 @@ class PO extends GettextTranslations
 
     public function read_entry($f, $lineno = 0)
     {
-        $entry = new TranslationEntry();
+        $entry = new EntryTranslations();
         // where were we in the last step
         // can be: comment, msgctxt, msgid, msgid_plural, msgstr, msgstr_plural
         $context = '';

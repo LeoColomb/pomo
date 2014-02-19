@@ -6,13 +6,15 @@
  * @package POMO
  */
 
-namespace POMO;
+namespace POMO\Translations;
 
 /**
- * Contains TranslationEntry class
- * TranslationEntry class encapsulates a translatable string
+ * Contains EntryTranslations class
+ * EntryTranslations class encapsulates a translatable string
+ *
+ * @subpackage Translations
  */
-class TranslationEntry
+class EntryTranslations
 {
     /**
      * Whether the entry contains a string and its plural form, default is false
