@@ -18,7 +18,7 @@ ini_set('auto_detect_line_endings', 1);
 class PO extends GettextTranslations
 {
     const PO_MAX_LINE_LEN = 79;
-    
+
     public $comments_before_headers = '';
 
     /**
