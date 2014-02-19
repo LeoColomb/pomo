@@ -2,6 +2,9 @@ vendor
 composer.phar
 phpunit.xml
 composer.lock
+*.phpproj*
+POMO.sln
+POMO.v12.suo
 
 #############
 ## Windows detritus
