@@ -1,25 +1,24 @@
 <?php
-/*
+/**
  * This file is part of the POMO package.
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * @copyright POMO 2014 - GPLv2
+ * @package POMO
  */
 
 namespace POMO;
 
 use POMO\Translations\GettextTranslations;
 
-define('PO_MAX_LINE_LEN', 79);
 ini_set('auto_detect_line_endings', 1);
 
 /**
  * Class for working with PO files
- *
- * @package POMO
  */
 class PO extends GettextTranslations
 {
+    const PO_MAX_LINE_LEN = 79;
+    
     public $comments_before_headers = '';
 
     /**

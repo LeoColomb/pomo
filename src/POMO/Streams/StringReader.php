@@ -1,9 +1,9 @@
 <?php
-/*
+/**
  * This file is part of the POMO package.
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * @copyright POMO 2014 - GPLv2
+ * @package POMO
  */
 
 namespace POMO\Streams;
@@ -12,7 +12,6 @@ namespace POMO\Streams;
  * Provides file-like methods for manipulating a string instead
  * of a physical file.
  *
- * @package POMO
  * @subpackage Streams
  * @author Danilo Segan <danilo@kvota.net>
  */

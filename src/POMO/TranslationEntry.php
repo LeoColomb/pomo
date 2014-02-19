@@ -1,9 +1,9 @@
 <?php
-/*
+/**
  * This file is part of the POMO package.
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * @copyright POMO 2014 - GPLv2
+ * @package POMO
  */
 
 namespace POMO;
@@ -11,8 +11,6 @@ namespace POMO;
 /**
  * Contains TranslationEntry class
  * TranslationEntry class encapsulates a translatable string
- *
- * @package POMO
  */
 class TranslationEntry
 {
