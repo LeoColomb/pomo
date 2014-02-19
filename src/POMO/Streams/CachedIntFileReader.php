@@ -15,8 +15,10 @@ namespace POMO\Streams;
  * @subpackage Streams
  * @author Danilo Segan <danilo@kvota.net>
  */
-class CachedIntFileReader extends CachedFileReader {
-	function __construct($filename) {
-		parent::__construct($filename);
-	}
+class CachedIntFileReader extends CachedFileReader
+{
+    public function __construct($filename)
+    {
+        parent::__construct($filename);
+    }
 }

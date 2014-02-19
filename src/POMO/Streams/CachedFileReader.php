@@ -15,12 +15,14 @@ namespace POMO\Streams;
  * @subpackage Streams
  * @author Danilo Segan <danilo@kvota.net>
  */
-class CachedFileReader extends StringReader {
-	function __construct($filename) {
-		parent::__construct();
-		$this->_str = file_get_contents($filename);
-		if (false === $this->_str)
-			return false;
-		$this->_pos = 0;
-	}
+class CachedFileReader extends StringReader
+{
+    public function __construct($filename)
+    {
+        parent::__construct();
+        $this->_str = file_get_contents($filename);
+        if (false === $this->_str)
+            return false;
+        $this->_pos = 0;
+    }
 }
