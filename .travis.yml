@@ -12,3 +12,7 @@ matrix:
         - php: hhvm
 
 before_script: composer install
+
+addons:
+  code_climate:
+    repo_token: VrzHw6P4bnJOTSndfSazvChrDvuGrRBTXxavubLzHYZiIxCWm2j1oQmTYNJesKzCpVewULSU+Zh/P5zZ2DVcnxpdLfObKQvhoo/LjJXBthTqQ4BMQqRlarNZwDCn0d0qCGw0HFPTz1TCRqQ69NPeS9nsDkJBWApFXYWkopP/vFM=
