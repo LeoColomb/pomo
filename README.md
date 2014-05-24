@@ -1,8 +1,8 @@
-POMO
+﻿POMO
 ====
-[![Latest Release](http://img.shields.io/github/release/LeoColomb/pomo.svg)](https://github.com/LeoColomb/pomo/releases)
-[![Build Status](http://img.shields.io/travis/LeoColomb/pomo.svg)](https://travis-ci.org/LeoColomb/pomo)
-[![Code Climate](http://img.shields.io/codeclimate/github/LeoColomb/pomo.svg)](https://codeclimate.com/github/LeoColomb/pomo)
+[![Latest Release](https://img.shields.io/packagist/v/pomo/pomo.svg)](https://packagist.org/packages/pomo/pomo)
+[![Build Status](https://travis-ci.org/LeoColomb/pomo.svg?branch=master)](https://travis-ci.org/LeoColomb/pomo)
+[![Code Climate](https://img.shields.io/codeclimate/github/LeoColomb/pomo.svg)](https://codeclimate.com/github/LeoColomb/pomo)
 
 **Gettext library to translate with I18n**.  
 [Why use it](http://codex.wordpress.org/I18n_for_WordPress_Developers).
