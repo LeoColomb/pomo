@@ -13,8 +13,8 @@ matrix:
 
 before_script: composer install
 
-after_script: CODECLIMATE_REPO_TOKEN="4957dbed55094d836b153e66f83b3fd50769d5d0423d9206f5598fb78741c907" vendor/bin/test-reporter
+after_script: vendor/bin/test-reporter
 
 addons:
   code_climate:
-    repo_token: VrzHw6P4bnJOTSndfSazvChrDvuGrRBTXxavubLzHYZiIxCWm2j1oQmTYNJesKzCpVewULSU+Zh/P5zZ2DVcnxpdLfObKQvhoo/LjJXBthTqQ4BMQqRlarNZwDCn0d0qCGw0HFPTz1TCRqQ69NPeS9nsDkJBWApFXYWkopP/vFM=
+    repo_token: 4957dbed55094d836b153e66f83b3fd50769d5d0423d9206f5598fb78741c907
