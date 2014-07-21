@@ -50,7 +50,7 @@ class PO extends GettextTranslations
     public function export_entries()
     {
         //TODO: sorting
-        return implode("\n\n", array_map(array('PO', 'export_entry'), $this->entries));
+        return implode("\n\n", array_map(array(__NAMESPACE__.'\PO', 'export_entry'), $this->entries));
     }
 
     /**
@@ -111,9 +111,9 @@ class PO extends GettextTranslations
         $newline = "\n";
 
         $replaces = array(
-            "$slash" 	=> "$slash$slash",
-            "$quote"	=> "$slash$quote",
-            "\t" 		=> '\t',
+            "$slash"    => "$slash$slash",
+            "$quote"    => "$slash$quote",
+            "\t"        => '\t',
         );
 
         $string = str_replace(array_keys($replaces), array_values($replaces), $string);
@@ -140,7 +140,7 @@ class PO extends GettextTranslations
     {
         $escapes = array('t' => "\t", 'n' => "\n", '\\' => '\\');
         $lines = array_map('trim', explode("\n", $string));
-        $lines = array_map(array('PO', 'trim_quotes'), $lines);
+        $lines = array_map(array(__NAMESPACE__.'\PO', 'trim_quotes'), $lines);
         $unpoified = '';
         $previous_is_backslash = false;
         foreach ($lines as $line) {
@@ -396,7 +396,7 @@ class PO extends GettextTranslations
         }
     }
 
-    public function trim_quotes($s)
+    public static function trim_quotes($s)
     {
         if ( substr($s, 0, 1) == '"') $s = substr($s, 1);
         if ( substr($s, -1, 1) == '"') $s = substr($s, 0, -1);
