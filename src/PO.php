@@ -18,7 +18,7 @@ ini_set('auto_detect_line_endings', 1);
  */
 class PO extends GettextTranslations
 {
-    const PO_MAX_LINE_LEN = 79;
+    const MAX_LINE_LEN = 79;
 
     public $comments_before_headers = '';
 
@@ -191,7 +191,7 @@ class PO extends GettextTranslations
      */
     private function comment_block($text, $char=' ')
     {
-        $text = wordwrap($text, PO_MAX_LINE_LEN - 3);
+        $text = wordwrap($text, PO::MAX_LINE_LEN - 3);
 
         return PO::prepend_each_line($text, "#$char ");
     }
