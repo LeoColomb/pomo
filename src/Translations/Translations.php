@@ -11,16 +11,19 @@ namespace POMO\Translations;
 /**
  * Class for a set of entries for translation and their associated headers
  */
-class Translations
+class Translations implements TranslationsInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public $entries = array();
+    /**
+     * {@inheritdoc}
+     */
     public $headers = array();
 
     /**
-     * Add entry to the PO structure
-     *
-     * @param  object &$entry
-     * @return bool   true on success, false if the entry doesn't have a key
+     * {@inheritdoc}
      */
     public function add_entry($entry)
     {
@@ -50,19 +53,16 @@ class Translations
     }
 
     /**
-     * Sets $header PO header to $value
-     *
-     * If the header already exists, it will be overwritten
-     *
-     * @todo This should be out of this class, it is gettext specific
-     * @param string $header header name, without trailing :
-     * @param string $value  header value, without trailing \n
+     * {@inheritdoc}
      */
     public function set_header($header, $value)
     {
         $this->headers[$header] = $value;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function set_headers($headers)
     {
         foreach ($headers as $header => $value) {
@@ -70,11 +70,17 @@ class Translations
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function get_header($header)
     {
         return isset($this->headers[$header])? $this->headers[$header] : false;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function translate_entry(&$entry)
     {
         $key = $entry->key();
@@ -82,6 +88,9 @@ class Translations
         return isset($this->entries[$key])? $this->entries[$key] : false;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function translate($singular, $context=null)
     {
         $entry = new EntryTranslations(array('singular' => $singular, 'context' => $context));
@@ -91,26 +100,24 @@ class Translations
     }
 
     /**
-     * Given the number of items, returns the 0-based index of the plural form to use
-     *
-     * Here, in the base Translations class, the common logic for English is implemented:
-     * 	0 if there is one element, 1 otherwise
-     *
-     * This function should be overrided by the sub-classes. For example MO/PO can derive the logic
-     * from their headers.
-     *
-     * @param integer $count number of items
+     * {@inheritdoc}
      */
     public function select_plural_form($count)
     {
         return 1 == $count? 0 : 1;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function get_plural_forms_count()
     {
         return 2;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function translate_plural($singular, $plural, $count, $context = null)
     {
         $entry = new EntryTranslations(array('singular' => $singular, 'plural' => $plural, 'context' => $context));
@@ -127,11 +134,8 @@ class Translations
     }
 
     /**
-     * Merge $other in the current object.
-     *
-     * @param  Object &$other Another Translation object, whose translations will be merged in this one
-     * @return void
-     **/
+     * {@inheritdoc}
+     */
     public function merge_with(&$other)
     {
         foreach ($other->entries as $entry) {
