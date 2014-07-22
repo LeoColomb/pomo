@@ -29,16 +29,20 @@ class MO extends GettextTranslations
     public function import_from_file($filename)
     {
         $reader = new FileReader($filename);
-        if (!$reader->is_resource())
+        if (!$reader->is_resource()) {
             return false;
+        }
+
         return $this->import_from_reader($reader);
     }
 
     public function export_to_file($filename)
     {
         $fh = fopen($filename, 'wb');
-        if ( !$fh ) return false;
-        $res = $this->export_to_file_handle( $fh );
+        if (!$fh) {
+            return false;
+        }
+        $res = $this->export_to_file_handle($fh);
         fclose($fh);
 
         return $res;
@@ -47,20 +51,22 @@ class MO extends GettextTranslations
     public function export()
     {
         $tmp_fh = fopen("php://temp", 'r+');
-        if ( !$tmp_fh ) return false;
-        $this->export_to_file_handle( $tmp_fh );
-        rewind( $tmp_fh );
+        if (!$tmp_fh) {
+            return false;
+        }
+        $this->export_to_file_handle($tmp_fh);
+        rewind($tmp_fh);
 
-        return stream_get_contents( $tmp_fh );
+        return stream_get_contents($tmp_fh);
     }
 
     public function is_entry_good_for_export($entry)
     {
-        if ( empty( $entry->translations ) ) {
+        if (empty($entry->translations)) {
             return false;
         }
 
-        if ( !array_filter( $entry->translations ) ) {
+        if (!array_filter($entry->translations)) {
             return false;
         }
 
@@ -69,7 +75,10 @@ class MO extends GettextTranslations
 
     public function export_to_file_handle($fh)
     {
-        $entries = array_filter( $this->entries, array( $this, 'is_entry_good_for_export' ) );
+        $entries = array_filter(
+            $this->entries,
+            array($this, 'is_entry_good_for_export')
+        );
         ksort($entries);
         $magic = 0x950412de;
         $revision = 0;
@@ -79,8 +88,16 @@ class MO extends GettextTranslations
         $size_of_hash = 0;
         $hash_addr = $translations_lenghts_addr + 8 * $total;
         $current_addr = $hash_addr;
-        fwrite($fh, pack('V*', $magic, $revision, $total, $originals_lenghts_addr,
-            $translations_lenghts_addr, $size_of_hash, $hash_addr));
+        fwrite($fh, pack(
+                'V*',
+                $magic,
+                $revision,
+                $total,
+                $originals_lenghts_addr,
+                $translations_lenghts_addr,
+                $size_of_hash,
+                $hash_addr
+            ));
         fseek($fh, $originals_lenghts_addr);
 
         // headers' msgid is an empty string
@@ -98,12 +115,16 @@ class MO extends GettextTranslations
         }
 
         $exported_headers = $this->export_headers();
-        fwrite($fh, pack('VV', $reader->strlen($exported_headers), $current_addr));
+        fwrite($fh, pack(
+            'VV',
+            $reader->strlen($exported_headers),
+            $current_addr)
+        );
         $current_addr += strlen($exported_headers) + 1;
         $translations_table = $exported_headers . chr(0);
 
         foreach ($entries as $entry) {
-            $translations_table .= $this->export_translations($entry) . chr(0);
+            $translations_table .= $this->export_translations($entry).chr(0);
             $length = $reader->strlen($this->export_translations($entry));
             fwrite($fh, pack('VV', $length, $current_addr));
             $current_addr += $length + 1;
@@ -119,8 +140,13 @@ class MO extends GettextTranslations
     {
         //TODO: warnings for control characters
         $exported = $entry->singular;
-        if ($entry->is_plural) $exported .= chr(0).$entry->plural;
-        if (!is_null($entry->context)) $exported = $entry->context . chr(4) . $exported;
+        if ($entry->is_plural) {
+            $exported .= chr(0).$entry->plural;
+        }
+        if (!is_null($entry->context)) {
+            $exported = $entry->context.chr(4).$exported;
+        }
+
         return $exported;
     }
 
@@ -134,7 +160,7 @@ class MO extends GettextTranslations
     {
         $exported = '';
         foreach ($this->headers as $header => $value) {
-            $exported.= "$header: $value\n";
+            $exported .= "$header: $value\n";
         }
 
         return $exported;
@@ -166,16 +192,18 @@ class MO extends GettextTranslations
         }
         $reader->setEndian($endian_string);
 
-        $endian = ('big' == $endian_string)? 'N' : 'V';
+        $endian = ('big' == $endian_string) ? 'N' : 'V';
 
         $header = $reader->read(24);
-        if ($reader->strlen($header) != 24)
+        if ($reader->strlen($header) != 24) {
             return false;
+        }
 
         // parse header
         $header = unpack("{$endian}revision/{$endian}total/{$endian}originals_lenghts_addr/{$endian}translations_lenghts_addr/{$endian}hash_length/{$endian}hash_addr", $header);
-        if (!is_array($header))
+        if (!is_array($header)) {
             return false;
+        }
 
         // support revision 0 of MO format specs, only
         if ($header['revision'] != 0) {
@@ -183,7 +211,7 @@ class MO extends GettextTranslations
         }
 
         // seek to data blocks
-        $reader->seekto( $header['originals_lenghts_addr'] );
+        $reader->seekto($header['originals_lenghts_addr']);
 
         // read originals' indices
         $originals_lengths_length = $header['translations_lenghts_addr'] - $header['originals_lenghts_addr'];
@@ -192,7 +220,7 @@ class MO extends GettextTranslations
         }
 
         $originals = $reader->read($originals_lengths_length);
-        if ( $reader->strlen( $originals ) != $originals_lengths_length ) {
+        if ($reader->strlen($originals) != $originals_lengths_length) {
             return false;
         }
 
@@ -203,13 +231,13 @@ class MO extends GettextTranslations
         }
 
         $translations = $reader->read($translations_lenghts_length);
-        if ( $reader->strlen( $translations ) != $translations_lenghts_length ) {
+        if ($reader->strlen($translations) != $translations_lenghts_length) {
             return false;
         }
 
         // transform raw data into set of indices
-        $originals    = $reader->str_split( $originals, 8 );
-        $translations = $reader->str_split( $translations, 8 );
+        $originals    = $reader->str_split($originals, 8);
+        $translations = $reader->str_split($translations, 8);
 
         // skip hash table
         $strings_addr = $header['hash_addr'] + $header['hash_length'] * 4;
@@ -220,16 +248,18 @@ class MO extends GettextTranslations
         $reader->close();
 
         for ($i = 0; $i < $header['total']; $i++) {
-            $o = unpack( "{$endian}length/{$endian}pos", $originals[$i] );
-            $t = unpack( "{$endian}length/{$endian}pos", $translations[$i] );
-            if ( !$o || !$t ) return false;
+            $o = unpack("{$endian}length/{$endian}pos", $originals[$i]);
+            $t = unpack("{$endian}length/{$endian}pos", $translations[$i]);
+            if (!$o || !$t) {
+                return false;
+            }
 
             // adjust offset due to reading strings to separate space before
             $o['pos'] -= $strings_addr;
             $t['pos'] -= $strings_addr;
 
-            $original    = $reader->substr( $strings, $o['pos'], $o['length'] );
-            $translation = $reader->substr( $strings, $t['pos'], $t['length'] );
+            $original    = $reader->substr($strings, $o['pos'], $o['length']);
+            $translation = $reader->substr($strings, $t['pos'], $t['length']);
 
             if ('' === $original) {
                 $this->set_headers($this->make_headers($translation));
@@ -246,9 +276,10 @@ class MO extends GettextTranslations
      * Build a EntryTranslations from original string and translation strings,
      * found in a MO file
      *
-     * @param string $original    original string to translate from MO file. Might contain
-     *                            0x04 as context separator or 0x00 as singular/plural separator
-     * @param string $translation translation string from MO file. Might contain
+     * @param string $original    original string to translate from MO file.
+     *                            Might contain 0x04 as context separator or
+     *                            0x00 as singular/plural separator
+     * @param string $translation translation string from MO file.Might contain
      *                            0x00 as a plural translations separator
      * @retrun EntryTranslations New entry
      */

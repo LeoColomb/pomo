@@ -30,7 +30,9 @@ class Translations implements TranslationsInterface
             $entry = new EntryTranslations($entry);
         }
         $key = $entry->key();
-        if (false === $key) return false;
+        if (false === $key) {
+            return false;
+        }
         $this->entries[$key] = &$entry;
 
         return true;
@@ -42,11 +44,14 @@ class Translations implements TranslationsInterface
             $entry = new EntryTranslations($entry);
         }
         $key = $entry->key();
-        if (false === $key) return false;
-        if (isset($this->entries[$key]))
+        if (false === $key) {
+            return false;
+        }
+        if (isset($this->entries[$key])) {
             $this->entries[$key]->merge_with($entry);
-        else
+        } else {
             $this->entries[$key] = &$entry;
+        }
 
         return true;
     }
@@ -74,7 +79,7 @@ class Translations implements TranslationsInterface
      */
     public function get_header($header)
     {
-        return isset($this->headers[$header])? $this->headers[$header] : false;
+        return isset($this->headers[$header]) ? $this->headers[$header] : false;
     }
 
     /**
@@ -84,18 +89,23 @@ class Translations implements TranslationsInterface
     {
         $key = $entry->key();
 
-        return isset($this->entries[$key])? $this->entries[$key] : false;
+        return isset($this->entries[$key]) ? $this->entries[$key] : false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function translate($singular, $context=null)
+    public function translate($singular, $context = null)
     {
-        $entry = new EntryTranslations(array('singular' => $singular, 'context' => $context));
+        $entry = new EntryTranslations(array(
+                'singular' => $singular,
+                'context' => $context
+            ));
         $translated = $this->translate_entry($entry);
 
-        return ($translated && !empty($translated->translations))? $translated->translations[0] : $singular;
+        return ($translated && !empty($translated->translations)) ?
+            $translated->translations[0] :
+            $singular;
     }
 
     /**
@@ -103,7 +113,7 @@ class Translations implements TranslationsInterface
      */
     public function select_plural_form($count)
     {
-        return 1 == $count? 0 : 1;
+        return 1 == $count ? 0 : 1;
     }
 
     /**
@@ -117,19 +127,27 @@ class Translations implements TranslationsInterface
     /**
      * {@inheritdoc}
      */
-    public function translate_plural($singular, $plural, $count, $context = null)
-    {
-        $entry = new EntryTranslations(array('singular' => $singular, 'plural' => $plural, 'context' => $context));
+    public function translate_plural(
+        $singular,
+        $plural,
+        $count,
+        $context = null
+    ) {
+        $entry = new EntryTranslations(array(
+                'singular' => $singular,
+                'plural' => $plural,
+                'context' => $context
+            ));
         $translated = $this->translate_entry($entry);
         $index = $this->select_plural_form($count);
         $total_plural_forms = $this->get_plural_forms_count();
         if ($translated && 0 <= $index && $index < $total_plural_forms &&
                 is_array($translated->translations) &&
-                isset($translated->translations[$index]))
-
+                isset($translated->translations[$index])) {
             return $translated->translations[$index];
-        else
-            return 1 == $count? $singular : $plural;
+        } else {
+            return 1 == $count ? $singular : $plural;
+        }
     }
 
     /**
@@ -145,10 +163,11 @@ class Translations implements TranslationsInterface
     public function merge_originals_with(&$other)
     {
         foreach ($other->entries as $entry) {
-            if ( !isset( $this->entries[$entry->key()] ) )
+            if ( !isset( $this->entries[$entry->key()] )) {
                 $this->entries[$entry->key()] = $entry;
-            else
+            } else {
                 $this->entries[$entry->key()]->merge_with($entry);
+            }
         }
     }
 }

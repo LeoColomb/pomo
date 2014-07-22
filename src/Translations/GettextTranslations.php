@@ -16,14 +16,15 @@ class GettextTranslations extends Translations
     /**
      * The gettext implementation of select_plural_form.
      *
-     * It lives in this class, because there are more than one descendand, which will use it and
-     * they can't share it effectively.
+     * It lives in this class, because there are more than one descendand,
+     * which will use it and they can't share it effectively.
      *
      * @param integer $count Items count
      */
     public function gettext_select_plural_form($count)
     {
-        if (!isset($this->_gettext_select_plural_form) || is_null($this->_gettext_select_plural_form)) {
+        if (!isset($this->_gettext_select_plural_form)
+            || is_null($this->_gettext_select_plural_form)) {
             list( $nplurals, $expression ) = $this->nplurals_and_expression_from_header($this->get_header('Plural-Forms'));
             $this->_nplurals = $nplurals;
             $this->_gettext_select_plural_form = $this->make_plural_form_function($nplurals, $expression);
@@ -45,8 +46,8 @@ class GettextTranslations extends Translations
     }
 
     /**
-     * Makes a function, which will return the right translation index, according to the
-     * plural forms header
+     * Makes a function, which will return the right translation index,
+     * according to the plural forms header
      *
      * @param  integer $nplurals
      * @param  string  $expression
@@ -64,7 +65,8 @@ class GettextTranslations extends Translations
 
     /**
      * Adds parantheses to the inner parts of ternary operators in
-     * plural expressions, because PHP evaluates ternary oerators from left to right
+     * plural expressions, because PHP evaluates ternary oerators
+     * from left to right
      *
      * @param  string $expression the expression without parentheses
      * @return string the expression with parentheses added
@@ -104,7 +106,9 @@ class GettextTranslations extends Translations
         $lines = explode("\n", $translation);
         foreach ($lines as $line) {
             $parts = explode(':', $line, 2);
-            if (!isset($parts[1])) continue;
+            if (!isset($parts[1])) {
+                continue;
+            }
             $headers[trim($parts[0])] = trim($parts[1]);
         }
 
@@ -115,7 +119,7 @@ class GettextTranslations extends Translations
     {
         parent::set_header($header, $value);
         if ('Plural-Forms' == $header) {
-            list( $nplurals, $expression ) = $this->nplurals_and_expression_from_header($this->get_header('Plural-Forms'));
+            list($nplurals, $expression) = $this->nplurals_and_expression_from_header($this->get_header('Plural-Forms'));
             $this->_nplurals = $nplurals;
             $this->_gettext_select_plural_form = $this->make_plural_form_function($nplurals, $expression);
         }

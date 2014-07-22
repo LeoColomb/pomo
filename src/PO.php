@@ -25,7 +25,8 @@ class PO extends GettextTranslations
     /**
      * Exports headers to a PO entry
      *
-     * @return string msgid/msgstr PO entry for this PO file headers, doesn't contain newline at the end
+     * @return string msgid/msgstr PO entry for this PO file headers, doesn't
+     *                contain newline at the end
      */
     public function export_headers()
     {
@@ -34,10 +35,13 @@ class PO extends GettextTranslations
             $header_string.= "$header: $value\n";
         }
         $poified = PO::poify($header_string);
-        if ($this->comments_before_headers)
-            $before_headers = PO::prepend_each_line(rtrim($this->comments_before_headers)."\n", '# ');
-        else
+        if ($this->comments_before_headers) {
+            $before_headers = PO::prepend_each_line(rtrim(
+                $this->comments_before_headers)."\n", '# '
+            );
+        } else {
             $before_headers = '';
+        }
 
         return rtrim("{$before_headers}msgid \"\"\nmsgstr $poified");
     }
@@ -45,19 +49,25 @@ class PO extends GettextTranslations
     /**
      * Exports all entries to PO format
      *
-     * @return string sequence of mgsgid/msgstr PO strings, doesn't containt newline at the end
+     * @return string sequence of mgsgid/msgstr PO strings, doesn't containt
+     *                newline at the end
      */
     public function export_entries()
     {
         //TODO: sorting
-        return implode("\n\n", array_map(array(__NAMESPACE__.'\PO', 'export_entry'), $this->entries));
+        return implode("\n\n", array_map(
+            array(__NAMESPACE__.'\PO', 'export_entry'),
+            $this->entries)
+        );
     }
 
     /**
      * Exports the whole PO file as a string
      *
-     * @param  bool   $include_headers whether to include the headers in the export
-     * @return string ready for inclusion in PO file string for headers and all the enrtries
+     * @param  bool   $include_headers whether to include the headers in the
+     *                                 export
+     * @return string ready for inclusion in PO file string for headers and all
+     *                                the enrtries
      */
     public function export($include_headers = true)
     {
@@ -75,23 +85,30 @@ class PO extends GettextTranslations
      * Same as {@link export}, but writes the result to a file
      *
      * @param  string $filename        where to write the PO string
-     * @param  bool   $include_headers whether to include tje headers in the export
+     * @param  bool   $include_headers whether to include tje headers in the
+     *                                 export
      * @return bool   true on success, false on error
      */
     public function export_to_file($filename, $include_headers = true)
     {
         $fh = fopen($filename, 'w');
-        if (false === $fh) return false;
+        if (false === $fh) {
+            return false;
+        }
         $export = $this->export($include_headers);
         $res = fwrite($fh, $export);
-        if (false === $res) return false;
+        if (false === $res) {
+            return false;
+        }
+
         return fclose($fh);
     }
 
     /**
      * Text to include as a comment before the start of the PO contents
      *
-     * Doesn't need to include # in the beginning of lines, these are added automatically
+     * Doesn't need to include # in the beginning of lines, these are added
+     * automatically
      *
      * @param string $text Comment text
      */
@@ -118,12 +135,20 @@ class PO extends GettextTranslations
             "\t"        => '\t',
         );
 
-        $string = str_replace(array_keys($replaces), array_values($replaces), $string);
+        $string = str_replace(
+            array_keys($replaces),
+            array_values($replaces),
+            $string
+        );
 
-        $po = $quote.implode("${slash}n$quote$newline$quote", explode($newline, $string)).$quote;
+        $po = $quote.implode(
+            "${slash}n$quote$newline$quote",
+            explode($newline, $string)
+        ).$quote;
         // add empty string on first line for readbility
         if (false !== strpos($string, $newline) &&
-                (substr_count($string, $newline) > 1 || !($newline === substr($string, -strlen($newline))))) {
+                (substr_count($string, $newline) > 1 ||
+                !($newline === substr($string, -strlen($newline))))) {
             $po = "$quote$quote$newline$po";
         }
         // remove empty strings
@@ -150,13 +175,16 @@ class PO extends GettextTranslations
             $chars = $chars[0];
             foreach ($chars as $char) {
                 if (!$previous_is_backslash) {
-                    if ('\\' == $char)
+                    if ('\\' == $char) {
                         $previous_is_backslash = true;
-                    else
+                    } else {
                         $unpoified .= $char;
+                    }
                 } else {
                     $previous_is_backslash = false;
-                    $unpoified .= isset($escapes[$char])? $escapes[$char] : $char;
+                    $unpoified .= isset($escapes[$char]) ?
+                        $escapes[$char] :
+                        $char;
                 }
             }
         }
@@ -177,10 +205,18 @@ class PO extends GettextTranslations
         $php_with = var_export($with, true);
         $lines = explode("\n", $string);
         // do not prepend the string on the last empty line, artefact by explode
-        if ("\n" == substr($string, -1)) unset($lines[count($lines) - 1]);
-        $res = implode("\n", array_map(create_function('$x', "return $php_with.\$x;"), $lines));
+        if ("\n" == substr($string, -1)) {
+            unset($lines[count($lines) - 1]);
+        }
+        $res = implode("\n", array_map(
+                create_function('$x', "return $php_with.\$x;"),
+                $lines
+            ));
         // give back the empty line, we ignored above
-        if ("\n" == substr($string, -1)) $res .= "\n";
+        if ("\n" == substr($string, -1)) {
+            $res .= "\n";
+        }
+
         return $res;
     }
 
@@ -209,20 +245,36 @@ class PO extends GettextTranslations
      */
     public static function export_entry(&$entry)
     {
-        if (is_null($entry->singular)) return false;
+        if (is_null($entry->singular)) {
+            return false;
+        }
         $po = array();
-        if (!empty($entry->translator_comments)) $po[] = self::comment_block($entry->translator_comments);
-        if (!empty($entry->extracted_comments)) $po[] = self::comment_block($entry->extracted_comments, '.');
-        if (!empty($entry->references)) $po[] = self::comment_block(implode(' ', $entry->references), ':');
-        if (!empty($entry->flags)) $po[] = self::comment_block(implode(", ", $entry->flags), ',');
-        if (!is_null($entry->context)) $po[] = 'msgctxt '.self::poify($entry->context);
+        if (!empty($entry->translator_comments)) {
+            $po[] = self::comment_block($entry->translator_comments);
+        }
+        if (!empty($entry->extracted_comments)) {
+            $po[] = self::comment_block($entry->extracted_comments, '.');
+        }
+        if (!empty($entry->references)) {
+            $po[] = self::comment_block(implode(' ', $entry->references), ':');
+        }
+        if (!empty($entry->flags)) {
+            $po[] = self::comment_block(implode(", ", $entry->flags), ',');
+        }
+        if (!is_null($entry->context)) {
+            $po[] = 'msgctxt '.self::poify($entry->context);
+        }
         $po[] = 'msgid '.self::poify($entry->singular);
         if (!$entry->is_plural) {
-            $translation = empty($entry->translations)? '' : $entry->translations[0];
+            $translation = empty($entry->translations) ?
+                '' :
+                $entry->translations[0];
             $po[] = 'msgstr '.self::poify($translation);
         } else {
             $po[] = 'msgid_plural '.self::poify($entry->plural);
-            $translations = empty($entry->translations)? array('', '') : $entry->translations;
+            $translations = empty($entry->translations) ?
+                array('', '') :
+                $entry->translations;
             foreach ($translations as $i => $translation) {
                 $po[] = "msgstr[$i] ".self::poify($translation);
             }
@@ -234,13 +286,19 @@ class PO extends GettextTranslations
     public function import_from_file($filename)
     {
         $f = fopen($filename, 'r');
-        if (!$f) return false;
+        if (!$f) {
+            return false;
+        }
         $lineno = 0;
         while (true) {
             $res = $this->read_entry($f, $lineno);
-            if (!$res) break;
+            if (!$res) {
+                break;
+            }
             if ($res['entry']->singular == '') {
-                $this->set_headers($this->make_headers($res['entry']->translations[0]));
+                $this->set_headers(
+                    $this->make_headers($res['entry']->translations[0])
+                );
             } else {
                 $this->add_entry($res['entry']);
             }
@@ -269,17 +327,22 @@ class PO extends GettextTranslations
             $line = PO::read_line($f);
             if (!$line) {
                 if (feof($f)) {
-                    if ($is_final($context))
+                    if ($is_final($context)) {
                         break;
-                    elseif (!$context) // we haven't read a line and eof came
+                    } elseif (!$context) {// we haven't read a line and eof came
+
                         return null;
-                    else
+                    } else {
                         return false;
+                    }
                 } else {
                     return false;
                 }
             }
-            if ($line == "\n") continue;
+            if ($line == "\n") {
+                continue;
+            }
+
             $line = trim($line);
             if (preg_match('/^#/', $line, $m)) {
                 // the comment is the start of a new entry
@@ -311,7 +374,9 @@ class PO extends GettextTranslations
                     $lineno--;
                     break;
                 }
-                if ($context && $context != 'msgctxt' && $context != 'comment') {
+                if ($context &&
+                    $context != 'msgctxt' &&
+                    $context != 'comment') {
                     return false;
                 }
                 $context = 'msgid';
@@ -340,15 +405,20 @@ class PO extends GettextTranslations
                 $unpoified = PO::unpoify($line);
                 switch ($context) {
                     case 'msgid':
-                        $entry->singular .= $unpoified; break;
+                        $entry->singular .= $unpoified;
+                        break;
                     case 'msgctxt':
-                        $entry->context .= $unpoified; break;
+                        $entry->context .= $unpoified;
+                        break;
                     case 'msgid_plural':
-                        $entry->plural .= $unpoified; break;
+                        $entry->plural .= $unpoified;
+                        break;
                     case 'msgstr':
-                        $entry->translations[0] .= $unpoified; break;
+                        $entry->translations[0] .= $unpoified;
+                        break;
                     case 'msgstr_plural':
-                        $entry->translations[$msgstr_index] .= $unpoified; break;
+                        $entry->translations[$msgstr_index] .= $unpoified;
+                        break;
                     default:
                         return false;
                 }
@@ -356,7 +426,10 @@ class PO extends GettextTranslations
                 return false;
             }
         }
-        if (array() == array_filter($entry->translations, create_function('$t', 'return $t || "0" === $t;'))) {
+        if (array() == array_filter(
+                $entry->translations,
+                create_function('$t', 'return $t || "0" === $t;'))
+            ) {
             $entry->translations = array();
         }
 
@@ -377,8 +450,10 @@ class PO extends GettextTranslations
 
             return true;
         }
-        $line = $use_last_line? $last_line : fgets($f);
-        $line = ( "\r\n" == substr( $line, -2 ) ) ? rtrim( $line, "\r\n" ) . "\n" : $line;
+        $line = $use_last_line ? $last_line : fgets($f);
+        $line = ( "\r\n" == substr( $line, -2 ) ) ?
+            rtrim( $line, "\r\n" ) . "\n" :
+            $line;
         $last_line = $line;
         $use_last_line = false;
 
@@ -390,20 +465,35 @@ class PO extends GettextTranslations
         $first_two = substr($po_comment_line, 0, 2);
         $comment = trim(substr($po_comment_line, 2));
         if ('#:' == $first_two) {
-            $entry->references = array_merge($entry->references, preg_split('/\s+/', $comment));
+            $entry->references = array_merge(
+                $entry->references,
+                preg_split('/\s+/', $comment)
+            );
         } elseif ('#.' == $first_two) {
-            $entry->extracted_comments = trim($entry->extracted_comments . "\n" . $comment);
+            $entry->extracted_comments = trim(
+                $entry->extracted_comments . "\n" . $comment
+            );
         } elseif ('#,' == $first_two) {
-            $entry->flags = array_merge($entry->flags, preg_split('/,\s*/', $comment));
+            $entry->flags = array_merge(
+                $entry->flags,
+                preg_split('/,\s*/', $comment)
+            );
         } else {
-            $entry->translator_comments = trim($entry->translator_comments . "\n" . $comment);
+            $entry->translator_comments = trim(
+                $entry->translator_comments . "\n" . $comment
+            );
         }
     }
 
     public static function trim_quotes($s)
     {
-        if ( substr($s, 0, 1) == '"') $s = substr($s, 1);
-        if ( substr($s, -1, 1) == '"') $s = substr($s, 0, -1);
+        if ( substr($s, 0, 1) == '"') {
+            $s = substr($s, 1);
+        }
+        if ( substr($s, -1, 1) == '"') {
+            $s = substr($s, 0, -1);
+        }
+
         return $s;
     }
 }

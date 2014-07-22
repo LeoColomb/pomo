@@ -10,6 +10,8 @@ namespace POMO\Translations;
 
 /**
  * Translations Interface that all POMO Translators must implement
+ *
+ * @author Léo Colombaro <git@colombaro.fr>
  */
 interface TranslationsInterface
 {
@@ -48,13 +50,15 @@ interface TranslationsInterface
     public function translate($singular, $context = null);
 
     /**
-     * Given the number of items, returns the 0-based index of the plural form to use
+     * Given the number of items, returns the 0-based index of the plural form
+     * to use
      *
-     * Here, in the base Translations class, the common logic for English is implemented:
+     * Here, in the base Translations class, the common logic for English is
+     * implemented:
      * 	0 if there is one element, 1 otherwise
      *
-     * This function should be overrided by the sub-classes. For example MO/PO can derive the logic
-     * from their headers.
+     * This function should be overrided by the sub-classes. For example MO/PO
+     * can derive the logic from their headers.
      *
      * @param integer $count number of items
      */
@@ -74,12 +78,18 @@ interface TranslationsInterface
      * @param  mixed   $context
      * @return string  The correct translation
      */
-    public function translate_plural($singular, $plural, $count, $context = null);
+    public function translate_plural(
+        $singular,
+        $plural,
+        $count,
+        $context = null
+    );
 
     /**
      * Merge $other in the current object.
      *
-     * @param  Object &$other Another Translation object, whose translations will be merged in this one
+     * @param  Object &$other Another Translation object, whose translations
+     *                        will be merged in this one
      * @return void
      **/
     public function merge_with(&$other);

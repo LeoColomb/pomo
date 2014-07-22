@@ -51,10 +51,18 @@ class EntryTranslations
         foreach ($args as $varname => $value) {
             $this->$varname = $value;
         }
-        if (isset($args['plural'])) $this->is_plural = true;
-        if (!is_array($this->translations)) $this->translations = array();
-        if (!is_array($this->references)) $this->references = array();
-        if (!is_array($this->flags)) $this->flags = array();
+        if (isset($args['plural'])) {
+            $this->is_plural = true;
+        }
+        if (!is_array($this->translations)) {
+            $this->translations = array();
+        }
+        if (!is_array($this->references)) {
+            $this->references = array();
+        }
+        if (!is_array($this->flags)) {
+            $this->flags = array();
+        }
     }
 
     /**
@@ -64,15 +72,17 @@ class EntryTranslations
      */
     public function key()
     {
-        if (is_null($this->singular)) return false;
+        if (is_null($this->singular)) {
+            return false;
+        }
         // prepend context and EOT, like in MO files
-        return is_null($this->context)? $this->singular : $this->context.chr(4).$this->singular;
+        return is_null($this->context) ? $this->singular : $this->context.chr(4).$this->singular;
     }
 
     public function merge_with(&$other)
     {
-        $this->flags = array_unique( array_merge( $this->flags, $other->flags ) );
-        $this->references = array_unique( array_merge( $this->references, $other->references ) );
+        $this->flags = array_unique(array_merge($this->flags, $other->flags));
+        $this->references = array_unique(array_merge($this->references, $other->references));
         if ($this->extracted_comments != $other->extracted_comments) {
             $this->extracted_comments .= $other->extracted_comments;
         }

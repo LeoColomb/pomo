@@ -20,7 +20,8 @@ class Reader
 
     public function __construct()
     {
-        $this->is_overloaded = ((ini_get("mbstring.func_overload") & 2) != 0) && function_exists('mb_substr');
+        $this->is_overloaded = ((ini_get("mbstring.func_overload") & 2) != 0) &&
+            function_exists('mb_substr');
         $this->_pos = 0;
     }
 
@@ -37,15 +38,16 @@ class Reader
     /**
      * Reads a 32bit Integer from the Stream
      *
-     * @return mixed The integer, corresponding to the next 32 bits from
-     *               the stream of false if there are not enough bytes or on error
+     * @return mixed The integer, corresponding to the next 32 bits from the
+     *               stream of false if there are not enough bytes or on error
      */
     public function readint32()
     {
         $bytes = $this->read(4);
-        if (4 != $this->strlen($bytes))
+        if (4 != $this->strlen($bytes)) {
             return false;
-        $endian_letter = ('big' == $this->endian)? 'N' : 'V';
+        }
+        $endian_letter = ('big' == $this->endian) ? 'N' : 'V';
         $int = unpack($endian_letter, $bytes);
 
         return array_shift($int);
@@ -61,9 +63,10 @@ class Reader
     public function readint32array($count)
     {
         $bytes = $this->read(4 * $count);
-        if (4*$count != $this->strlen($bytes))
+        if (4*$count != $this->strlen($bytes)) {
             return false;
-        $endian_letter = ('big' == $this->endian)? 'N' : 'V';
+        }
+        $endian_letter = ('big' == $this->endian) ? 'N' : 'V';
 
         return unpack($endian_letter.$count, $bytes);
     }
@@ -92,12 +95,13 @@ class Reader
         if (!function_exists('str_split')) {
             $length = $this->strlen($string);
             $out = array();
-            for ($i = 0; $i < $length; $i += $chunk_size)
+            for ($i = 0; $i < $length; $i += $chunk_size) {
                 $out[] = $this->substr($string, $i, $chunk_size);
+            }
 
             return $out;
         } else {
-            return str_split( $string, $chunk_size );
+            return str_split($string, $chunk_size);
         }
     }
 

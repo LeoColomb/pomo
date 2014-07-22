@@ -62,7 +62,7 @@ class NOOPTranslations implements TranslationsInterface
     /**
      * {@inheritdoc}
      */
-    public function translate($singular, $context=null)
+    public function translate($singular, $context = null)
     {
         return $singular;
     }
@@ -86,8 +86,12 @@ class NOOPTranslations implements TranslationsInterface
     /**
      * {@inheritdoc}
      */
-    public function translate_plural($singular, $plural, $count, $context = null)
-    {
+    public function translate_plural(
+        $singular,
+        $plural,
+        $count,
+        $context = null
+    ) {
         return 1 == $count ? $singular : $plural;
     }
 

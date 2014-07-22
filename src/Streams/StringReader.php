@@ -29,14 +29,20 @@ class StringReader extends Reader
     {
         $data = $this->substr($this->_str, $this->_pos, $bytes);
         $this->_pos += $bytes;
-        if ($this->strlen($this->_str) < $this->_pos) $this->_pos = $this->strlen($this->_str);
+        if ($this->strlen($this->_str) < $this->_pos) {
+            $this->_pos = $this->strlen($this->_str);
+        }
+
         return $data;
     }
 
     public function seekto($pos)
     {
         $this->_pos = $pos;
-        if ($this->strlen($this->_str) < $this->_pos) $this->_pos = $this->strlen($this->_str);
+        if ($this->strlen($this->_str) < $this->_pos) {
+            $this->_pos = $this->strlen($this->_str);
+        }
+
         return $this->_pos;
     }
 
@@ -47,7 +53,11 @@ class StringReader extends Reader
 
     public function read_all()
     {
-        return $this->substr($this->_str, $this->_pos, $this->strlen($this->_str));
+        return $this->substr(
+            $this->_str,
+            $this->_pos,
+            $this->strlen($this->_str)
+        );
     }
 
 }
