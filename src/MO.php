@@ -159,7 +159,7 @@ class MO extends GettextTranslations
 
     public function import_from_reader($reader)
     {
-        $endian_string = MO::get_byteorder($reader->readint32());
+        $endian_string = $this->get_byteorder($reader->readint32());
         if (false === $endian_string) {
             return false;
         }

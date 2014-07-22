@@ -35,7 +35,7 @@ class PO extends GettextTranslations
         }
         $poified = PO::poify($header_string);
         if ($this->comments_before_headers)
-            $before_headers = $this->prepend_each_line(rtrim($this->comments_before_headers)."\n", '# ');
+            $before_headers = PO::prepend_each_line(rtrim($this->comments_before_headers)."\n", '# ');
         else
             $before_headers = '';
 
@@ -189,11 +189,11 @@ class PO extends GettextTranslations
      * @param string $char character to denote a special PO comment,
      *                     like :, default is a space
      */
-    private function comment_block($text, $char=' ')
+    private static function comment_block($text, $char=' ')
     {
-        $text = wordwrap($text, PO::MAX_LINE_LEN - 3);
+        $text = wordwrap($text, self::MAX_LINE_LEN - 3);
 
-        return PO::prepend_each_line($text, "#$char ");
+        return self::prepend_each_line($text, "#$char ");
     }
 
     /**
@@ -207,20 +207,20 @@ class PO extends GettextTranslations
     {
         if (is_null($entry->singular)) return false;
         $po = array();
-        if (!empty($entry->translator_comments)) $po[] = PO::comment_block($entry->translator_comments);
-        if (!empty($entry->extracted_comments)) $po[] = PO::comment_block($entry->extracted_comments, '.');
-        if (!empty($entry->references)) $po[] = PO::comment_block(implode(' ', $entry->references), ':');
-        if (!empty($entry->flags)) $po[] = PO::comment_block(implode(", ", $entry->flags), ',');
-        if (!is_null($entry->context)) $po[] = 'msgctxt '.PO::poify($entry->context);
-        $po[] = 'msgid '.PO::poify($entry->singular);
+        if (!empty($entry->translator_comments)) $po[] = self::comment_block($entry->translator_comments);
+        if (!empty($entry->extracted_comments)) $po[] = self::comment_block($entry->extracted_comments, '.');
+        if (!empty($entry->references)) $po[] = self::comment_block(implode(' ', $entry->references), ':');
+        if (!empty($entry->flags)) $po[] = self::comment_block(implode(", ", $entry->flags), ',');
+        if (!is_null($entry->context)) $po[] = 'msgctxt '.self::poify($entry->context);
+        $po[] = 'msgid '.self::poify($entry->singular);
         if (!$entry->is_plural) {
             $translation = empty($entry->translations)? '' : $entry->translations[0];
-            $po[] = 'msgstr '.PO::poify($translation);
+            $po[] = 'msgstr '.self::poify($translation);
         } else {
-            $po[] = 'msgid_plural '.PO::poify($entry->plural);
+            $po[] = 'msgid_plural '.self::poify($entry->plural);
             $translations = empty($entry->translations)? array('', '') : $entry->translations;
             foreach ($translations as $i => $translation) {
-                $po[] = "msgstr[$i] ".PO::poify($translation);
+                $po[] = "msgstr[$i] ".self::poify($translation);
             }
         }
 
@@ -359,7 +359,7 @@ class PO extends GettextTranslations
         return array('entry' => $entry, 'lineno' => $lineno);
     }
 
-    public function read_line($f, $action = 'read')
+    public static function read_line($f, $action = 'read')
     {
         static $last_line = '';
         static $use_last_line = false;
