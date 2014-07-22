@@ -14,17 +14,6 @@ namespace POMO\Translations;
 interface TranslationsInterface
 {
     /**
-     * Different entries provided availible
-     *
-     * @var array
-     */
-    public $entries = array();
-    /**
-     * @var array
-     */
-    public $headers = array();
-
-    /**
      * Add entry to the PO structure
      *
      * @param  object &$entry

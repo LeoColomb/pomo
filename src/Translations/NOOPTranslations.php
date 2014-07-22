@@ -13,6 +13,11 @@ namespace POMO\Translations;
  */
 class NOOPTranslations implements TranslationsInterface
 {
+    /**
+     * Entries provided availible
+     *
+     * @var array
+     */
     public $entries = array();
     public $headers = array();
 

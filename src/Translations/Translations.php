@@ -14,12 +14,11 @@ namespace POMO\Translations;
 class Translations implements TranslationsInterface
 {
     /**
-     * {@inheritdoc}
+     * Entries provided availible
+     *
+     * @var array
      */
     public $entries = array();
-    /**
-     * {@inheritdoc}
-     */
     public $headers = array();
 
     /**
