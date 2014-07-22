@@ -92,6 +92,8 @@ class PO extends GettextTranslations
      * Text to include as a comment before the start of the PO contents
      *
      * Doesn't need to include # in the beginning of lines, these are added automatically
+     *
+     * @param string $text Comment text
      */
     public function set_comment_before_headers($text)
     {
@@ -166,8 +168,9 @@ class PO extends GettextTranslations
      * Inserts $with in the beginning of every new line of $string and
      * returns the modified string
      *
-     * @param string $string prepend lines in this string
-     * @param string $with   prepend lines with this string
+     * @param  string $string prepend lines in this string
+     * @param  string $with   prepend lines with this string
+     * @return string The modified string
      */
     public static function prepend_each_line($string, $with)
     {
@@ -185,9 +188,10 @@ class PO extends GettextTranslations
      * Prepare a text as a comment -- wraps the lines and prepends #
      * and a special character to each line
      *
-     * @param string $text the comment text
-     * @param string $char character to denote a special PO comment,
-     *                     like :, default is a space
+     * @param  string $text the comment text
+     * @param  string $char character to denote a special PO comment,
+     *                      like :, default is a space
+     * @return string The modified string
      */
     private static function comment_block($text, $char=' ')
     {

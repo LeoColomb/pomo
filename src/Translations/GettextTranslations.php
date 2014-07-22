@@ -19,6 +19,7 @@ class GettextTranslations extends Translations
      * It lives in this class, because there are more than one descendand, which will use it and
      * they can't share it effectively.
      *
+     * @param integer $count Items count
      */
     public function gettext_select_plural_form($count)
     {
@@ -46,6 +47,10 @@ class GettextTranslations extends Translations
     /**
      * Makes a function, which will return the right translation index, according to the
      * plural forms header
+     *
+     * @param  integer $nplurals
+     * @param  string  $expression
+     * @return integer The right translation index
      */
     public function make_plural_form_function($nplurals, $expression)
     {
@@ -53,7 +58,7 @@ class GettextTranslations extends Translations
         $func_body = "
             \$index = (int) ($expression);
 
-            return (\$index < $nplurals)? \$index : $nplurals - 1;";
+            return (\$index < $nplurals) ? \$index : $nplurals - 1;";
         return create_function('$n', $func_body);
     }
 

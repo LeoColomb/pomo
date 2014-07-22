@@ -23,7 +23,8 @@ class MO extends GettextTranslations
     /**
      * Fills up with the entries from MO file $filename
      *
-     * @param string $filename MO file to load
+     * @param  string $filename MO file to load
+     * @return bool   Success
      */
     public function import_from_file($filename)
     {
@@ -249,6 +250,7 @@ class MO extends GettextTranslations
      *                            0x04 as context separator or 0x00 as singular/plural separator
      * @param string $translation translation string from MO file. Might contain
      *                            0x00 as a plural translations separator
+     * @retrun EntryTranslations New entry
      */
     public static function &make_entry($original, $translation) {
         $entry = new EntryTranslations();
