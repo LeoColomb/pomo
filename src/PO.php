@@ -245,7 +245,7 @@ class PO extends GettextTranslations
      */
     public static function export_entry(&$entry)
     {
-        if (is_null($entry->singular)) {
+        if (is_null($entry->singular) || '' === $entry->singular) {
             return false;
         }
         $po = array();
@@ -269,6 +269,7 @@ class PO extends GettextTranslations
             $translation = empty($entry->translations) ?
                 '' :
                 $entry->translations[0];
+            $translation = self::match_begin_and_end_newlines($translation, $entry->singular);
             $po[] = 'msgstr '.self::poify($translation);
         } else {
             $po[] = 'msgid_plural '.self::poify($entry->plural);
@@ -276,11 +277,39 @@ class PO extends GettextTranslations
                 array('', '') :
                 $entry->translations;
             foreach ($translations as $i => $translation) {
+                $translation = self::match_begin_and_end_newlines($translation, $entry->plural);
                 $po[] = "msgstr[$i] ".self::poify($translation);
             }
         }
 
         return implode("\n", $po);
+    }
+
+    public static function match_begin_and_end_newlines($translation, $original)
+    {
+        if ('' === $translation) {
+            return $translation;
+        }
+        
+        $original_begin = "\n" === substr( $original, 0, 1 );
+        $original_end = "\n" === substr( $original, -1 );
+        $translation_begin = "\n" === substr( $translation, 0, 1 );
+        $translation_end = "\n" === substr( $translation, -1 );
+        if ( $original_begin ) {
+            if ( ! $translation_begin ) {
+                $translation = "\n" . $translation;
+            }
+        } elseif ( $translation_begin ) {
+            $translation = ltrim( $translation, "\n" );
+        }
+        if ( $original_end ) {
+            if ( ! $translation_end ) {
+                $translation .= "\n";
+            }
+        } elseif ( $translation_end ) {
+            $translation = rtrim( $translation, "\n" );
+        }
+        return $translation;
     }
 
     public function import_from_file($filename)
