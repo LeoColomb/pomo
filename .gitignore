@@ -3,6 +3,8 @@ phpunit.xml
 composer.lock
 .idea/
 *.tmp
+*.cache
+build/
 
 #############
 ## Windows detritus

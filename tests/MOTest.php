@@ -5,14 +5,16 @@
  * MO Test
  */
 
-namespace POMO;
+namespace POMO\Tests;
 
-use POMO\Translations\GettextTranslations;
 use POMO\Translations\EntryTranslations;
 use POMO\Translations\Translations;
+use POMO\MO;
 
-class MOTest extends \PHPUnit_Framework_TestCase
+class MOTest extends \PHPUnit\Framework\TestCase
 {
+    use POMOTestTrait;
+
     public function test_mo_simple()
     {
         $mo = new MO();
@@ -91,7 +93,7 @@ class MOTest extends \PHPUnit_Framework_TestCase
             $mo->add_entry($entry);
         }
         $mo->add_entry($no_EntryTranslations);
-        $temp_fn = temp_filename();
+        $temp_fn = $this->temp_filename();
         $mo->export_to_file($temp_fn);
         $again = new MO();
         $again->import_from_file($temp_fn);
@@ -106,7 +108,7 @@ class MOTest extends \PHPUnit_Framework_TestCase
         $entries = array(  );
         $mo = new MO;
         $mo->add_entry(array( 'singular' => 'baba', 'translations' => array( '', '' ) ));
-        $temp_fn = temp_filename();
+        $temp_fn = $this->temp_filename();
         $mo->export_to_file($temp_fn);
         $again = new MO();
         $again->import_from_file($temp_fn);

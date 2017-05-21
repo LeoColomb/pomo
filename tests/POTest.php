@@ -5,12 +5,15 @@
  * PO Test
  */
 
-namespace POMO;
+namespace POMO\Tests;
 
 use POMO\Translations\EntryTranslations;
+use POMO\PO;
 
-class POTest extends \PHPUnit_Framework_TestCase
+class POTest extends \PHPUnit\Framework\TestCase
 {
+    use POMOTestTrait;
+
     public function setUp()
     {
         $this->a90 = str_repeat("a", 90);
@@ -59,24 +62,24 @@ class POTest extends \PHPUnit_Framework_TestCase
         $po = new PO();
         $entry = new EntryTranslations(array('singular' => 'baba'));
         $this->assertEquals("msgid \"baba\"\nmsgstr \"\"", $po->export_entry($entry));
-        
+
         // plural
         $entry = new EntryTranslations(array('singular' => 'baba', 'plural' => 'babas'));
-        $expected = replace_r_n('msgid "baba"
+        $expected = $this->replace_r_n('msgid "baba"
 msgid_plural "babas"
 msgstr[0] ""
 msgstr[1] ""');
         $this->assertEquals($expected, $po->export_entry($entry));
-        
+
         $entry = new EntryTranslations(array('singular' => 'baba', 'translator_comments' => "baba\ndyado"));
-        $expected = replace_r_n('#  baba
+        $expected = $this->replace_r_n('#  baba
 #  dyado
 msgid "baba"
 msgstr ""');
         $this->assertEquals($expected, $po->export_entry($entry));
-        
+
         $entry = new EntryTranslations(array('singular' => 'baba', 'extracted_comments' => "baba"));
-        $expected = replace_r_n('#. baba
+        $expected = $this->replace_r_n('#. baba
 msgid "baba"
 msgstr ""');
         $this->assertEquals($expected, $po->export_entry($entry));
@@ -84,7 +87,7 @@ msgstr ""');
             'singular' => 'baba',
             'extracted_comments' => "baba",
             'references' => range(1, 29)));
-        $expected = replace_r_n('#. baba
+        $expected = $this->replace_r_n('#. baba
 #: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
 #: 29
 msgid "baba"
@@ -97,13 +100,13 @@ msgstr ""');
         $this->assertEquals("msgid \"baba\"\nmsgstr \"куку\"", $po->export_entry($entry));
 
         $entry = new EntryTranslations(array('singular' => 'baba', 'plural' => 'babas', 'translations' => array('кукубуку')));
-        $expected = replace_r_n('msgid "baba"
+        $expected = $this->replace_r_n('msgid "baba"
 msgid_plural "babas"
 msgstr[0] "кукубуку"');
         $this->assertEquals($expected, $po->export_entry($entry));
 
         $entry = new EntryTranslations(array('singular' => 'baba', 'plural' => 'babas', 'translations' => array('кукубуку', 'кукуруку', 'бабаяга')));
-        $expected = replace_r_n('msgid "baba"
+        $expected = $this->replace_r_n('msgid "baba"
 msgid_plural "babas"
 msgstr[0] "кукубуку"
 msgstr[1] "кукуруку"
@@ -111,7 +114,7 @@ msgstr[2] "бабаяга"');
         $this->assertEquals($expected, $po->export_entry($entry));
         // context
         $entry = new EntryTranslations(array('context' => 'ctxt', 'singular' => 'baba', 'plural' => 'babas', 'translations' => array('кукубуку', 'кукуруку', 'бабаяга'), 'flags' => array('fuzzy', 'php-format')));
-        $expected = replace_r_n('#, fuzzy, php-format
+        $expected = $this->replace_r_n('#, fuzzy, php-format
 msgctxt "ctxt"
 msgid "baba"
 msgid_plural "babas"
@@ -163,11 +166,11 @@ msgstr[2] "бабаяга"');
         $po->add_entry($entry);
         $po->add_entry($entry2);
 
-        $temp_fn = temp_filename();
+        $temp_fn = $this->temp_filename();
         $po->export_to_file($temp_fn, false);
         $this->assertEquals($po->export(false), file_get_contents($temp_fn));
 
-        $temp_fn2 = temp_filename();
+        $temp_fn2 = $this->temp_filename();
         $po->export_to_file($temp_fn2);
         $this->assertEquals($po->export(), file_get_contents($temp_fn2));
     }
