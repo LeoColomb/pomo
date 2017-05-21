@@ -2,10 +2,7 @@
 
 /**
  * POMO Unit Tests
- * MO Test
- *
- * @copyright 2014 Leo Colombaro
- * @license GPL
+ * PO Test
  */
 
 namespace POMO;
