@@ -204,7 +204,7 @@ class PO extends GettextTranslations
     {
         $lines = explode("\n", $string);
         $append = '';
-        if ("\n" === substr($string, -1) && '' === end($lines)) { 
+        if ("\n" === substr($string, -1) && '' === end($lines)) {
             // Last line might be empty because $string was terminated
             // with a newline, remove it from the $lines array,
             // we'll restore state by re-terminating the string at the end
@@ -227,7 +227,7 @@ class PO extends GettextTranslations
      *                      like :, default is a space
      * @return string The modified string
      */
-    private static function comment_block($text, $char=' ')
+    private static function comment_block($text, $char = ' ')
     {
         $text = wordwrap($text, self::MAX_LINE_LEN - 3);
 
@@ -288,24 +288,24 @@ class PO extends GettextTranslations
         if ('' === $translation) {
             return $translation;
         }
-        
-        $original_begin = "\n" === substr( $original, 0, 1 );
-        $original_end = "\n" === substr( $original, -1 );
-        $translation_begin = "\n" === substr( $translation, 0, 1 );
-        $translation_end = "\n" === substr( $translation, -1 );
-        if ( $original_begin ) {
-            if ( ! $translation_begin ) {
+
+        $original_begin = "\n" === substr($original, 0, 1);
+        $original_end = "\n" === substr($original, -1);
+        $translation_begin = "\n" === substr($translation, 0, 1);
+        $translation_end = "\n" === substr($translation, -1);
+        if ($original_begin) {
+            if (! $translation_begin) {
                 $translation = "\n" . $translation;
             }
-        } elseif ( $translation_begin ) {
-            $translation = ltrim( $translation, "\n" );
+        } elseif ($translation_begin) {
+            $translation = ltrim($translation, "\n");
         }
-        if ( $original_end ) {
-            if ( ! $translation_end ) {
+        if ($original_end) {
+            if (! $translation_end) {
                 $translation .= "\n";
             }
-        } elseif ( $translation_end ) {
-            $translation = rtrim( $translation, "\n" );
+        } elseif ($translation_end) {
+            $translation = rtrim($translation, "\n");
         }
         return $translation;
     }
@@ -346,7 +346,8 @@ class PO extends GettextTranslations
      * @param string $context
      * @return bool
      */
-    protected static function is_final($context) {
+    protected static function is_final($context)
+    {
         return ($context === 'msgstr') || ($context === 'msgstr_plural');
     }
 
@@ -468,7 +469,7 @@ class PO extends GettextTranslations
         }
         $have_translations = false;
         foreach ($entry->translations as $t) {
-            if ($t || ('0' === $t) ) {
+            if ($t || ('0' === $t)) {
                 $have_translations = true;
                 break;
             }
@@ -495,8 +496,8 @@ class PO extends GettextTranslations
             return true;
         }
         $line = $use_last_line ? $last_line : fgets($f);
-        $line = ( "\r\n" == substr( $line, -2 ) ) ?
-            rtrim( $line, "\r\n" ) . "\n" :
+        $line = ("\r\n" == substr($line, -2)) ?
+            rtrim($line, "\r\n") . "\n" :
             $line;
         $last_line = $line;
         $use_last_line = false;
@@ -531,10 +532,10 @@ class PO extends GettextTranslations
 
     public static function trim_quotes($s)
     {
-        if ( substr($s, 0, 1) == '"') {
+        if (substr($s, 0, 1) == '"') {
             $s = substr($s, 1);
         }
-        if ( substr($s, -1, 1) == '"') {
+        if (substr($s, -1, 1) == '"') {
             $s = substr($s, 0, -1);
         }
 

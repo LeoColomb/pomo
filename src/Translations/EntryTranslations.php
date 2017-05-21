@@ -41,7 +41,7 @@ class EntryTranslations
      *                    - references (array) -- places in the code this strings is used, in relative_to_root_path/file.php:linenum form
      *                    - flags (array) -- flags like php-format
      */
-    public function __construct($args=array())
+    public function __construct($args = array())
     {
         // if no singular -- empty object
         if (!isset($args['singular'])) {
@@ -86,6 +86,5 @@ class EntryTranslations
         if ($this->extracted_comments != $other->extracted_comments) {
             $this->extracted_comments .= $other->extracted_comments;
         }
-
     }
 }
