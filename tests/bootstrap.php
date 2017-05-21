@@ -12,7 +12,7 @@ $loader = require __DIR__ . "/../vendor/autoload.php";
 */
 function temp_filename()
 {
-    $tmp_dir = realpath(__DIR__);
+    $tmp_dir = realpath(__DIR__.'/data');
     return tempnam($tmp_dir, 'pomo');
 }
 
