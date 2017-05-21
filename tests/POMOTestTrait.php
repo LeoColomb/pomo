@@ -19,13 +19,4 @@ trait POMOTestTrait
         $tmp_dir = realpath(__DIR__.'/data');
         return tempnam($tmp_dir, 'pomo');
     }
-
-    /**
-     * @param $text
-     * @return mixed
-     */
-    public function replace_r_n($text)
-    {
-        return str_replace("\r\n", "\n", $text);
-    }
 }

@@ -8,7 +8,7 @@
 
 namespace POMO;
 
-use POMO\Streams\Reader;
+use POMO\Streams\NOOPReader;
 use POMO\Streams\FileReader;
 use POMO\Translations\GettextTranslations;
 use POMO\Translations\EntryTranslations;
@@ -19,6 +19,23 @@ use POMO\Translations\EntryTranslations;
 class MO extends GettextTranslations
 {
     public $_nplurals = 2;
+
+    /**
+     * Loaded MO file.
+     *
+     * @var string
+     */
+    private $filename = '';
+
+    /**
+     * Returns the loaded MO file.
+     *
+     * @return string The loaded MO file.
+     */
+    public function get_filename()
+    {
+        return $this->filename;
+    }
 
     /**
      * Fills up with the entries from MO file $filename
@@ -33,9 +50,15 @@ class MO extends GettextTranslations
             return false;
         }
 
+        $this->filename = (string) $filename;
+
         return $this->import_from_reader($reader);
     }
 
+    /**
+     * @param string $filename
+     * @return bool
+     */
     public function export_to_file($filename)
     {
         $fh = fopen($filename, 'wb');
@@ -48,6 +71,9 @@ class MO extends GettextTranslations
         return $res;
     }
 
+    /**
+     * @return string|false
+     */
     public function export()
     {
         $tmp_fh = fopen("php://temp", 'r+');
@@ -60,6 +86,10 @@ class MO extends GettextTranslations
         return stream_get_contents($tmp_fh);
     }
 
+    /**
+     * @param EntryTranslations $entry
+     * @return bool
+     */
     public function is_entry_good_for_export($entry)
     {
         if (empty($entry->translations)) {
@@ -73,6 +103,10 @@ class MO extends GettextTranslations
         return true;
     }
 
+    /**
+     * @param resource $fh
+     * @return true
+     */
     public function export_to_file_handle($fh)
     {
         $entries = array_filter(
@@ -89,15 +123,15 @@ class MO extends GettextTranslations
         $hash_addr = $translations_lenghts_addr + 8 * $total;
         $current_addr = $hash_addr;
         fwrite($fh, pack(
-                'V*',
-                $magic,
-                $revision,
-                $total,
-                $originals_lenghts_addr,
-                $translations_lenghts_addr,
-                $size_of_hash,
-                $hash_addr
-            ));
+            'V*',
+            $magic,
+            $revision,
+            $total,
+            $originals_lenghts_addr,
+            $translations_lenghts_addr,
+            $size_of_hash,
+            $hash_addr
+        ));
         fseek($fh, $originals_lenghts_addr);
 
         // headers' msgid is an empty string
@@ -105,7 +139,7 @@ class MO extends GettextTranslations
         $current_addr++;
         $originals_table = chr(0);
 
-        $reader = new Reader();
+        $reader = new NOOPReader();
 
         foreach ($entries as $entry) {
             $originals_table .= $this->export_original($entry) . chr(0);
@@ -118,8 +152,8 @@ class MO extends GettextTranslations
         fwrite($fh, pack(
             'VV',
             $reader->strlen($exported_headers),
-            $current_addr)
-        );
+            $current_addr
+        ));
         $current_addr += strlen($exported_headers) + 1;
         $translations_table = $exported_headers . chr(0);
 
@@ -136,6 +170,10 @@ class MO extends GettextTranslations
         return true;
     }
 
+    /**
+     * @param EntryTranslations $entry
+     * @return string
+     */
     public function export_original($entry)
     {
         //TODO: warnings for control characters
@@ -150,12 +188,19 @@ class MO extends GettextTranslations
         return $exported;
     }
 
+    /**
+     * @param EntryTranslations $entry
+     * @return string
+     */
     public function export_translations($entry)
     {
         //TODO: warnings for control characters
-        return implode(chr(0), $entry->translations);
+        return $entry->is_plural ? implode(chr(0), $entry->translations) : $entry->translations[0];
     }
 
+    /**
+     * @return string
+     */
     public function export_headers()
     {
         $exported = '';
@@ -166,6 +211,10 @@ class MO extends GettextTranslations
         return $exported;
     }
 
+    /**
+     * @param int $magic
+     * @return string|false
+     */
     public function get_byteorder($magic)
     {
         // The magic is 0x950412de
@@ -182,7 +231,11 @@ class MO extends GettextTranslations
         }
     }
 
-    public function import_from_reader($reader)
+    /**
+     * @param FileReader $reader
+     * @return bool
+     */
+    public function import_from_reader(FileReader $reader)
     {
         $endian_string = $this->get_byteorder($reader->readint32());
         if (false === $endian_string) {
@@ -262,7 +315,7 @@ class MO extends GettextTranslations
             if ('' === $original) {
                 $this->set_headers($this->make_headers($translation));
             } else {
-                $entry = &$this->make_entry($original, $translation);
+                $entry = &static::make_entry($original, $translation);
                 $this->entries[$entry->key()] = &$entry;
             }
         }
@@ -280,6 +333,7 @@ class MO extends GettextTranslations
      * @param string $translation translation string from MO file.Might contain
      *                            0x00 as a plural translations separator
      * @retrun EntryTranslations New entry
+     * @return EntryTranslations
      */
     public static function &make_entry($original, $translation)
     {
@@ -303,11 +357,18 @@ class MO extends GettextTranslations
         return $entry;
     }
 
+    /**
+     * @param int $count
+     * @return string
+     */
     public function select_plural_form($count)
     {
         return $this->gettext_select_plural_form($count);
     }
 
+    /**
+     * @return int
+     */
     public function get_plural_forms_count()
     {
         return $this->_nplurals;

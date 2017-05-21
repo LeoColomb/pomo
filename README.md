@@ -20,7 +20,7 @@ $translations = new MO();
 $translations->import_from_file($the_mo_filepath);
 
 // Translate
-$translations->translate($text)
+$translations->translate($text);
 ```
 
 Installation
@@ -45,7 +45,7 @@ use POMO\MO;
 
 Requirements
 ------------
-POMO works with PHP 5.3 or above.
+POMO works with PHP 5.4 or above.
 
 License
 -------
