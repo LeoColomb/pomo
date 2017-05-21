@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ruleset name="POMO">
+  <description>POMO Coding Standards</description>
+
+  <!-- Scan these files -->
+  <file>src</file>
+  <file>tests</file>
+
+  <!-- Show colors in console -->
+  <arg value="-colors"/>
+
+  <!-- Show sniff codes in all reports -->
+  <arg value="s"/>
+
+  <!-- Use PSR-2 as a base -->
+  <rule ref="PSR2"/>
+
+  <!-- Exclusions below are for WP coding standart -->
+  <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+    <exclude-pattern>src</exclude-pattern>
+    <exclude-pattern>tests</exclude-pattern>
+  </rule>
+  <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+    <exclude-pattern>src</exclude-pattern>
+  </rule>
+  <rule ref="Generic.Files.LineLength.TooLong">
+    <exclude-pattern>tests</exclude-pattern>
+  </rule>
+</ruleset>
