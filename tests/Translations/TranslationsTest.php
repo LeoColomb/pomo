@@ -35,7 +35,7 @@ class TranslationsTest extends TestCase
         // give add_entry() the arguments and let it create the entry itself
         $po = new Translations();
         $po->add_entry(array('singular' => 'baba',));
-        $entries= array_values($po->entries);
+        $entries = array_values($po->entries);
         $this->assertEquals($entry->key(), $entries[0]->key());
     }
 

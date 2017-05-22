@@ -286,6 +286,11 @@ class PO extends GettextTranslations
         return implode("\n", $po);
     }
 
+    /**
+     * @param $translation
+     * @param $original
+     * @return string
+     */
     public static function match_begin_and_end_newlines($translation, $original)
     {
         if ('' === $translation) {

@@ -11,6 +11,11 @@ use PHPUnit\Framework\TestCase;
 use POMO\Translations\EntryTranslations;
 use POMO\Translations\NOOPTranslations;
 
+/**
+ * @property NOOPTranslations noop
+ * @property EntryTranslations entry
+ * @property EntryTranslations plural_entry
+ */
 class NOOPTranslationsTest extends TestCase
 {
     public function setUp()
@@ -48,6 +53,13 @@ class NOOPTranslationsTest extends TestCase
     {
         $this->noop->add_entry($this->entry);
         $this->assertEquals('baba', $this->noop->translate('baba'));
+    }
+
+    public function test_select_plural()
+    {
+        $this->assertEquals(0, $this->noop->select_plural_form(1));
+        $this->assertEquals(1, $this->noop->select_plural_form(8));
+        $this->assertEquals(1, $this->noop->select_plural_form(''));
     }
 
     public function test_plural()

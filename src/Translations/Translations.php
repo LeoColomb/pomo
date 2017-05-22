@@ -135,9 +135,9 @@ class Translations implements TranslationsInterface
     }
 
     /**
-     * @param TranslationsInterface $other
+     * @param Translations $other
      */
-    public function merge_originals_with(TranslationsInterface &$other)
+    public function merge_originals_with(Translations &$other)
     {
         foreach ($other->entries as $entry) {
             if (!isset($this->entries[$entry->key()])) {

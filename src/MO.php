@@ -90,7 +90,7 @@ class MO extends GettextTranslations
      * @param EntryTranslations $entry
      * @return bool
      */
-    public function is_entry_good_for_export($entry)
+    public function is_entry_good_for_export(EntryTranslations $entry)
     {
         if (empty($entry->translations)) {
             return false;
@@ -174,7 +174,7 @@ class MO extends GettextTranslations
      * @param EntryTranslations $entry
      * @return string
      */
-    public function export_original($entry)
+    public function export_original(EntryTranslations $entry)
     {
         //TODO: warnings for control characters
         $exported = $entry->singular;
@@ -192,7 +192,7 @@ class MO extends GettextTranslations
      * @param EntryTranslations $entry
      * @return string
      */
-    public function export_translations($entry)
+    public function export_translations(EntryTranslations $entry)
     {
         //TODO: warnings for control characters
         return $entry->is_plural ? implode(chr(0), $entry->translations) : $entry->translations[0];
@@ -324,7 +324,7 @@ class MO extends GettextTranslations
     }
 
     /**
-     * Build a EntryTranslations from original string and translation strings,
+     * Build a  from original string and translation strings,
      * found in a MO file
      *
      * @param string $original    original string to translate from MO file.
@@ -332,8 +332,7 @@ class MO extends GettextTranslations
      *                            0x00 as singular/plural separator
      * @param string $translation translation string from MO file.Might contain
      *                            0x00 as a plural translations separator
-     * @retrun EntryTranslations New entry
-     * @return EntryTranslations
+     * @return EntryTranslations New entry
      */
     public static function &make_entry($original, $translation)
     {
