@@ -7,7 +7,9 @@
 
 namespace POMO\Tests;
 
-trait POMOTestTrait
+use PHPUnit\Framework\TestCase;
+
+abstract class POMOTestCase extends TestCase
 {
     /**
      * Returns the name of a temporary file

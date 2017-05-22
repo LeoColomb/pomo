@@ -45,7 +45,7 @@ use POMO\MO;
 
 Requirements
 ------------
-POMO works with PHP 5.4 or above.
+POMO works with PHP 5.3 or above.
 
 License
 -------

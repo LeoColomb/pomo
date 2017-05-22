@@ -15,10 +15,8 @@ use POMO\PO;
  * @property string a90
  * @property string po_a90
  */
-class POTest extends TestCase
+class POTest extends POMOTestCase
 {
-    use POMOTestTrait;
-
     public function setUp()
     {
         $this->a90 = str_repeat("a", 90);

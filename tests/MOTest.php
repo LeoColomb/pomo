@@ -12,10 +12,8 @@ use POMO\Translations\EntryTranslations;
 use POMO\Translations\Translations;
 use POMO\MO;
 
-class MOTest extends TestCase
+class MOTest extends POMOTestCase
 {
-    use POMOTestTrait;
-
     public function test_mo_simple()
     {
         $mo = new MO();
