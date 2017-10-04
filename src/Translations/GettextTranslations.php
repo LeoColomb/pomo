@@ -66,7 +66,7 @@ class GettextTranslations extends Translations implements TranslationsInterface
     public function make_plural_form_function($nplurals, $expression)
     {
         try {
-            $handler = new Plural(rtrim( $expression, ';' ));
+            $handler = new Plural(rtrim($expression, ';'));
             return array($handler, 'get');
         } catch (Exception $e) {
             // Fall back to default plural-form function.
