@@ -200,7 +200,7 @@ class Plural
                 default:
                     if ($next >= '0' && $next <= '9') {
                         $span = strspn($str, self::NUM_CHARS, $pos);
-                        $output[] = [ 'value', intval(substr($str, $pos, $span)) ];
+                        $output[] = array('value', intval(substr($str, $pos, $span)));
                         $pos += $span;
                         continue;
                     }
