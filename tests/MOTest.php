@@ -34,7 +34,6 @@ class MOTest extends POMOTestCase
         $this->assertEquals('twoey dragoney', $mo->translate_plural('one dragon', '%d dragons', 2));
         $this->assertEquals('twoey dragoney', $mo->translate_plural('one dragon', '%d dragons', -8));
 
-
         $mo->set_header('Plural-Forms', 'nplurals=5; plural=0');
         $this->assertEquals('oney dragoney', $mo->translate_plural('one dragon', '%d dragons', 1));
         $this->assertEquals('oney dragoney', $mo->translate_plural('one dragon', '%d dragons', 2));

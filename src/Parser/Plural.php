@@ -5,6 +5,8 @@
 
 namespace POMO\Parser;
 
+use Exception;
+
 /**
  * A gettext Plural-Forms parser.
  */
