@@ -2,7 +2,7 @@
 
 /**
  * POMO Unit Tests
- * EntryTranslations Test
+ * EntryTranslations Test.
  */
 
 namespace POMO\Tests\Translations;
@@ -37,8 +37,8 @@ class EntryTranslationsTest extends TestCase
 
     public function test_key()
     {
-        $entry_baba = new EntryTranslations(array('singular' => 'baba',));
-        $entry_dyado = new EntryTranslations(array('singular' => 'dyado',));
+        $entry_baba = new EntryTranslations(array('singular' => 'baba'));
+        $entry_dyado = new EntryTranslations(array('singular' => 'dyado'));
         $entry_baba_ctxt = new EntryTranslations(array('singular' => 'baba', 'context' => 'x'));
         $entry_baba_plural = new EntryTranslations(array('singular' => 'baba', 'plural' => 'babas'));
         $this->assertEquals($entry_baba->key(), $entry_baba_plural->key());

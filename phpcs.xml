@@ -15,7 +15,7 @@
   <!-- Use PSR-2 as a base -->
   <rule ref="PSR2"/>
 
-  <!-- Exclusions below are for WP coding standart -->
+  <!-- Exclusions below are for WP coding standard -->
   <rule ref="Generic.Files.LineLength.TooLong">
     <exclude-pattern>src</exclude-pattern>
     <exclude-pattern>tests</exclude-pattern>

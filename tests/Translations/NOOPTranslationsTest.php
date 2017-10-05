@@ -2,7 +2,7 @@
 
 /**
  * POMO Unit Tests
- * NOOPTranslations Test
+ * NOOPTranslations Test.
  */
 
 namespace POMO\Tests\Translations;
@@ -21,8 +21,8 @@ class NOOPTranslationsTest extends TestCase
     public function setUp()
     {
         //parent::setUp();
-        $this->noop = new NOOPTranslations;
-        $this->entry = new EntryTranslations(array( 'singular' => 'baba' ));
+        $this->noop = new NOOPTranslations();
+        $this->entry = new EntryTranslations(array('singular' => 'baba'));
         $this->plural_entry = new EntryTranslations(array('singular' => 'dyado', 'plural' => 'dyados', 'translations' => array('dyadox', 'dyadoy')));
     }
 

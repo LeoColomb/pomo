@@ -2,15 +2,14 @@
 
 /**
  * POMO Unit Tests
- * MO Test
+ * MO Test.
  */
 
 namespace POMO\Tests;
 
-use PHPUnit\Framework\TestCase;
+use POMO\MO;
 use POMO\Translations\EntryTranslations;
 use POMO\Translations\Translations;
-use POMO\MO;
 
 class MOTest extends POMOTestCase
 {
@@ -28,7 +27,7 @@ class MOTest extends POMOTestCase
         $mo = new MO();
         $mo->import_from_file(__DIR__.'/data/plural.mo');
         $this->assertEquals(1, count($mo->entries));
-        $this->assertEquals(array("oney dragoney", "twoey dragoney", "manyey dragoney", "manyeyey dragoney", "manyeyeyey dragoney"), $mo->entries["one dragon"]->translations);
+        $this->assertEquals(array('oney dragoney', 'twoey dragoney', 'manyey dragoney', 'manyeyey dragoney', 'manyeyeyey dragoney'), $mo->entries['one dragon']->translations);
 
         $this->assertEquals('oney dragoney', $mo->translate_plural('one dragon', '%d dragons', 1));
         $this->assertEquals('twoey dragoney', $mo->translate_plural('one dragon', '%d dragons', 2));
@@ -55,23 +54,23 @@ class MOTest extends POMOTestCase
         $mo = new MO();
         $mo->import_from_file(__DIR__.'/data/context.mo');
         $this->assertEquals(2, count($mo->entries));
-        $plural_entry = new EntryTranslations(array('singular' => 'one dragon', 'plural' => '%d dragons', 'translations' => array("oney dragoney", "twoey dragoney","manyey dragoney"), 'context' => 'dragonland'));
+        $plural_entry = new EntryTranslations(array('singular' => 'one dragon', 'plural' => '%d dragons', 'translations' => array('oney dragoney', 'twoey dragoney', 'manyey dragoney'), 'context' => 'dragonland'));
         $this->assertEquals($plural_entry, $mo->entries[$plural_entry->key()]);
-        $this->assertEquals("dragonland", $mo->entries[$plural_entry->key()]->context);
+        $this->assertEquals('dragonland', $mo->entries[$plural_entry->key()]->context);
 
-        $single_entry = new EntryTranslations(array('singular' => 'one dragon', 'translations' => array("oney dragoney"), 'context' => 'not so dragon'));
+        $single_entry = new EntryTranslations(array('singular' => 'one dragon', 'translations' => array('oney dragoney'), 'context' => 'not so dragon'));
         $this->assertEquals($single_entry, $mo->entries[$single_entry->key()]);
-        $this->assertEquals("not so dragon", $mo->entries[$single_entry->key()]->context);
+        $this->assertEquals('not so dragon', $mo->entries[$single_entry->key()]->context);
     }
 
     public function test_translations_merge()
     {
         $host = new Translations();
-        $host->add_entry(new EntryTranslations(array('singular' => 'pink',)));
-        $host->add_entry(new EntryTranslations(array('singular' => 'green',)));
+        $host->add_entry(new EntryTranslations(array('singular' => 'pink')));
+        $host->add_entry(new EntryTranslations(array('singular' => 'green')));
         $guest = new Translations();
-        $guest->add_entry(new EntryTranslations(array('singular' => 'green',)));
-        $guest->add_entry(new EntryTranslations(array('singular' => 'red',)));
+        $guest->add_entry(new EntryTranslations(array('singular' => 'green')));
+        $guest->add_entry(new EntryTranslations(array('singular' => 'red')));
         $host->merge_with($guest);
         $this->assertEquals(3, count($host->entries));
         $this->assertEquals(array(), array_diff(array('pink', 'green', 'red'), array_keys($host->entries)));
@@ -81,16 +80,16 @@ class MOTest extends POMOTestCase
     {
         $entries = array();
         $entries[] = new EntryTranslations(array('singular' => 'pink',
-            'translations' => array('розов')));
+            'translations' => array('розов'), ));
         $no_translation_entry = new EntryTranslations(array('singular' => 'grey'));
         $entries[] = new EntryTranslations(array('singular' => 'green', 'plural' => 'greens',
-            'translations' => array('зелен', 'зелени')));
+            'translations' => array('зелен', 'зелени'), ));
         $entries[] = new EntryTranslations(array('singular' => 'red', 'context' => 'color',
-            'translations' => array('червен')));
+            'translations' => array('червен'), ));
         $entries[] = new EntryTranslations(array('singular' => 'red', 'context' => 'bull',
-            'translations' => array('бик')));
+            'translations' => array('бик'), ));
         $entries[] = new EntryTranslations(array('singular' => 'maroon', 'plural' => 'maroons', 'context' => 'context',
-            'translations' => array('пурпурен', 'пурпурни')));
+            'translations' => array('пурпурен', 'пурпурни'), ));
 
         $mo = new MO();
         $mo->set_header('Project-Id-Version', 'Baba Project 1.0');
@@ -113,9 +112,8 @@ class MOTest extends POMOTestCase
 
     public function test_export_should_not_include_empty_translations()
     {
-        $entries = array(  );
-        $mo = new MO;
-        $mo->add_entry(array( 'singular' => 'baba', 'translations' => array( '', '' ) ));
+        $mo = new MO();
+        $mo->add_entry(array('singular' => 'baba', 'translations' => array('', '')));
 
         $temp_fn = $this->temp_filename();
         $mo->export_to_file($temp_fn);
@@ -145,8 +143,8 @@ class MOTest extends POMOTestCase
 
     public function test_overloaded_mb_functions()
     {
-        if ((ini_get("mbstring.func_overload") & 2) == 0) {
-            $this->markTestSkipped(__METHOD__ . ' only runs when mbstring.func_overload is enabled.');
+        if ((ini_get('mbstring.func_overload') & 2) == 0) {
+            $this->markTestSkipped(__METHOD__.' only runs when mbstring.func_overload is enabled.');
         }
 
         $mo = new MO();

@@ -2,14 +2,13 @@
 
 /**
  * POMO Unit Tests
- * PO Test
+ * PO Test.
  */
 
 namespace POMO\Tests;
 
-use PHPUnit\Framework\TestCase;
-use POMO\Translations\EntryTranslations;
 use POMO\PO;
+use POMO\Translations\EntryTranslations;
 
 /**
  * @property string a90
@@ -19,7 +18,7 @@ class POTest extends POMOTestCase
 {
     public function setUp()
     {
-        $this->a90 = str_repeat("a", 90);
+        $this->a90 = str_repeat('a', 90);
         $this->po_a90 = "\"$this->a90\"";
     }
 
@@ -46,7 +45,7 @@ class POTest extends POMOTestCase
         $this->assertEquals('"ba\\\\ba"', $po->poify('ba\\ba'));
         // random string
         $src = 'Categories can be selectively converted to tags using the <a href="%s">category to tag converter</a>.';
-        $this->assertEquals("\"Categories can be selectively converted to tags using the <a href=\\\"%s\\\">category to tag converter</a>.\"", $po->poify($src));
+        $this->assertEquals('"Categories can be selectively converted to tags using the <a href=\\"%s\\">category to tag converter</a>."', $po->poify($src));
     }
 
     public function test_unpoify()
@@ -76,14 +75,14 @@ msgstr[1] ""', $po->export_entry($entry));
 #  dyado
 msgid "baba"
 msgstr ""', $po->export_entry($entry));
-        $entry = new EntryTranslations(array('singular' => 'baba', 'extracted_comments' => "baba"));
+        $entry = new EntryTranslations(array('singular' => 'baba', 'extracted_comments' => 'baba'));
         $this->assertEquals('#. baba
 msgid "baba"
 msgstr ""', $po->export_entry($entry));
         $entry = new EntryTranslations(array(
             'singular' => 'baba',
-            'extracted_comments' => "baba",
-            'references' => range(1, 29)));
+            'extracted_comments' => 'baba',
+            'references' => range(1, 29), ));
         $this->assertEquals('#. baba
 #: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
 #: 29
@@ -119,8 +118,8 @@ msgstr[2] "бабаяга"', $po->export_entry($entry));
 
     public function test_export_entries()
     {
-        $entry = new EntryTranslations(array('singular' => 'baba',));
-        $entry2 = new EntryTranslations(array('singular' => 'dyado',));
+        $entry = new EntryTranslations(array('singular' => 'baba'));
+        $entry2 = new EntryTranslations(array('singular' => 'dyado'));
         $po = new PO();
         $po->add_entry($entry);
         $po->add_entry($entry2);
@@ -138,8 +137,8 @@ msgstr[2] "бабаяга"', $po->export_entry($entry));
     public function test_export()
     {
         $po = new PO();
-        $entry = new EntryTranslations(array('singular' => 'baba',));
-        $entry2 = new EntryTranslations(array('singular' => 'dyado',));
+        $entry = new EntryTranslations(array('singular' => 'baba'));
+        $entry2 = new EntryTranslations(array('singular' => 'dyado'));
         $po->set_header('Project-Id-Version', 'pomo/pomo tests');
         $po->set_header('POT-Creation-Date', '1972-03-23 07:00+0000');
         $po->add_entry($entry);
@@ -148,12 +147,11 @@ msgstr[2] "бабаяга"', $po->export_entry($entry));
         $this->assertEquals("msgid \"\"\nmsgstr \"\"\n\"Project-Id-Version: pomo/pomo tests\\n\"\n\"POT-Creation-Date: 1972-03-23 07:00+0000\\n\"\n\nmsgid \"baba\"\nmsgstr \"\"\n\nmsgid \"dyado\"\nmsgstr \"\"", $po->export());
     }
 
-
     public function test_export_to_file()
     {
         $po = new PO();
-        $entry = new EntryTranslations(array('singular' => 'baba',));
-        $entry2 = new EntryTranslations(array('singular' => 'dyado',));
+        $entry = new EntryTranslations(array('singular' => 'baba'));
+        $entry2 = new EntryTranslations(array('singular' => 'dyado'));
         $po->set_header('Project-Id-Version', 'pomo/pomo tests');
         $po->set_header('POT-Creation-Date', '1972-03-23 07:00+0000');
         $po->add_entry($entry);
@@ -176,23 +174,23 @@ msgstr[2] "бабаяга"', $po->export_entry($entry));
 
         $this->assertEquals(array('Project-Id-Version' => 'pomo/pomo tests', 'Plural-Forms' => 'nplurals=2; plural=n != 1;'), $po->headers);
 
-        $simple_entry = new EntryTranslations(array('singular' => 'moon',));
+        $simple_entry = new EntryTranslations(array('singular' => 'moon'));
         $this->assertEquals($simple_entry, $po->entries[$simple_entry->key()]);
 
         $all_types_entry = new EntryTranslations(array('singular' => 'strut', 'plural' => 'struts', 'context' => 'brum',
-            'translations' => array('ztrut0', 'ztrut1', 'ztrut2')));
+            'translations' => array('ztrut0', 'ztrut1', 'ztrut2'), ));
         $this->assertEquals($all_types_entry, $po->entries[$all_types_entry->key()]);
 
         $multiple_line_entry = new EntryTranslations(array('singular' => 'The first thing you need to do is tell Blogger to let WordPress access your account. You will be sent back here after providing authorization.', 'translations' => array("baba\ndyadogugu")));
         $this->assertEquals($multiple_line_entry, $po->entries[$multiple_line_entry->key()]);
 
         $multiple_line_all_types_entry = new EntryTranslations(array('context' => 'context', 'singular' => 'singular',
-            'plural' => 'plural', 'translations' => array('translation0', 'translation1', 'translation2')));
+            'plural' => 'plural', 'translations' => array('translation0', 'translation1', 'translation2'), ));
         $this->assertEquals($multiple_line_all_types_entry, $po->entries[$multiple_line_all_types_entry->key()]);
 
         $comments_entry = new EntryTranslations(array('singular' => 'a', 'translator_comments' => "baba\nbrubru",
-            'references' => array('wp-admin/x.php:111', 'baba:333', 'baba'), 'extracted_comments' => "translators: buuu",
-            'flags' => array('fuzzy')));
+            'references' => array('wp-admin/x.php:111', 'baba:333', 'baba'), 'extracted_comments' => 'translators: buuu',
+            'flags' => array('fuzzy'), ));
         $this->assertEquals($comments_entry, $po->entries[$comments_entry->key()]);
 
         $end_quote_entry = new EntryTranslations(array('singular' => 'a"'));

@@ -2,7 +2,7 @@
 
 /**
  * POMO Unit Tests
- * PluralForms Test
+ * PluralForms Test.
  */
 
 namespace POMO\Tests\Parser;
@@ -66,13 +66,13 @@ class PluralFormsTest extends TestCase
 
     /**
      * @dataProvider simple_provider
-    */
+     */
     public function test_simple($expression, $expected)
     {
         $pluralForms = new PluralForms($expression);
         $actual = array();
         foreach (array_keys($expected) as $num) {
-             $actual[ $num ] = $pluralForms->get($num);
+            $actual[$num] = $pluralForms->get($num);
         }
         $this->assertSame($expected, $actual);
     }
@@ -136,6 +136,7 @@ class PluralFormsTest extends TestCase
             }
         } catch (\Exception $e) {
             $this->assertEquals($expected_exception, $e->getMessage());
+
             return;
         }
 

@@ -20,7 +20,7 @@ abstract class Reader implements StreamInterface
 
     public function __construct()
     {
-        $this->is_overloaded = ((ini_get("mbstring.func_overload") & 2) != 0) &&
+        $this->is_overloaded = ((ini_get('mbstring.func_overload') & 2) != 0) &&
             function_exists('mb_substr');
         $this->_pos = 0;
     }

@@ -2,7 +2,7 @@
 
 /**
  * POMO Unit Tests
- * Translations Test
+ * Translations Test.
  */
 
 namespace POMO\Tests\Translations;
@@ -15,8 +15,8 @@ class TranslationsTest extends TestCase
 {
     public function test_add_entry()
     {
-        $entry = new EntryTranslations(array('singular' => 'baba',));
-        $entry2 = new EntryTranslations(array('singular' => 'dyado',));
+        $entry = new EntryTranslations(array('singular' => 'baba'));
+        $entry2 = new EntryTranslations(array('singular' => 'dyado'));
         $empty = new EntryTranslations();
         $po = new Translations();
         $po->add_entry($entry);
@@ -34,7 +34,7 @@ class TranslationsTest extends TestCase
 
         // give add_entry() the arguments and let it create the entry itself
         $po = new Translations();
-        $po->add_entry(array('singular' => 'baba',));
+        $po->add_entry(array('singular' => 'baba'));
         $entries = array_values($po->entries);
         $this->assertEquals($entry->key(), $entries[0]->key());
     }
@@ -82,7 +82,7 @@ class TranslationsTest extends TestCase
         $domain = new Translations();
         $domain->add_entry($entry_digit_1);
         $domain->add_entry($entry_digit_2);
-        $dummy_translation = new Translations;
+        $dummy_translation = new Translations();
         $this->assertEquals('1', $domain->translate('1'));
         $domain->merge_with($dummy_translation);
         $this->assertEquals('1', $domain->translate('1'));
