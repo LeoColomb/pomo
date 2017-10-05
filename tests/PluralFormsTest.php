@@ -172,5 +172,4 @@ class PluralFormsTest extends POMOTestCase
         $second = $mock->get(2);
         $this->assertEquals($first, $second);
     }
-
 }
