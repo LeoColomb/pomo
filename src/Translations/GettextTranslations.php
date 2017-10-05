@@ -8,6 +8,8 @@
 
 namespace POMO\Translations;
 
+use POMO\Parser\Plural;
+
 /**
  * Class for a set of entries for translation and their associated headers
  *
@@ -45,7 +47,7 @@ class GettextTranslations extends Translations implements TranslationsInterface
     {
         if (preg_match('/^\s*nplurals\s*=\s*(\d+)\s*;\s+plural\s*=\s*(.+)$/', $header, $matches)) {
             $nplurals = (int) $matches[1];
-            $expression = trim($this->parenthesize_plural_exression($matches[2]));
+            $expression = trim($matches[2]);
 
             return array($nplurals, $expression);
         } else {
@@ -63,12 +65,13 @@ class GettextTranslations extends Translations implements TranslationsInterface
      */
     public function make_plural_form_function($nplurals, $expression)
     {
-        $expression = str_replace('n', '$n', $expression);
-        $func_body = "
-            \$index = (int) ($expression);
-
-            return (\$index < $nplurals) ? \$index : $nplurals - 1;";
-        return create_function('$n', $func_body);
+        try {
+            $handler = new Plural(rtrim($expression, ';'));
+            return array($handler, 'get');
+        } catch (Exception $e) {
+            // Fall back to default plural-form function.
+            return $this->make_plural_form_function(2, 'n != 1');
+        }
     }
 
     /**
