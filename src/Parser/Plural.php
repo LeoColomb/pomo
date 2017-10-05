@@ -1,11 +1,13 @@
 <?php
-
 /**
- * A gettext Plural-Forms parser.
+ * This file is part of the POMO package.
  */
 
 namespace POMO\Parser;
 
+/**
+ * A gettext Plural-Forms parser.
+ */
 class Plural
 {
     /**
