@@ -8,6 +8,8 @@
 
 namespace POMO\Translations;
 
+use POMO\Parser\PluralForms;
+
 /**
  * Class for a set of entries for translation and their associated headers
  *
@@ -45,7 +47,7 @@ class GettextTranslations extends Translations implements TranslationsInterface
     {
         if (preg_match('/^\s*nplurals\s*=\s*(\d+)\s*;\s+plural\s*=\s*(.+)$/', $header, $matches)) {
             $nplurals = (int) $matches[1];
-            $expression = trim($this->parenthesize_plural_exression($matches[2]));
+            $expression = trim($matches[2]);
 
             return array($nplurals, $expression);
         } else {
@@ -57,23 +59,24 @@ class GettextTranslations extends Translations implements TranslationsInterface
      * Makes a function, which will return the right translation index,
      * according to the plural forms header
      *
-     * @param  integer $nplurals
-     * @param  string  $expression
-     * @return integer The right translation index
+     * @param  integer  $nplurals
+     * @param  string   $expression
+     * @return callable The right translation index
      */
     public function make_plural_form_function($nplurals, $expression)
     {
-        $expression = str_replace('n', '$n', $expression);
-        $func_body = "
-            \$index = (int) ($expression);
-
-            return (\$index < $nplurals) ? \$index : $nplurals - 1;";
-        return create_function('$n', $func_body);
+        try {
+            $handler = new PluralForms(rtrim($expression, ';'));
+            return array($handler, 'get');
+        } catch (\Exception $e) {
+            // Fall back to default plural-form function.
+            return $this->make_plural_form_function(2, 'n != 1');
+        }
     }
 
     /**
-     * Adds parantheses to the inner parts of ternary operators in
-     * plural expressions, because PHP evaluates ternary oerators
+     * Adds parentheses to the inner parts of ternary operators in
+     * plural expressions, because PHP evaluates ternary operators
      * from left to right
      *
      * @param  string $expression the expression without parentheses
