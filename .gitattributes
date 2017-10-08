@@ -1,7 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
-.travis.yml export-ignore
-phpunit.xml.dist export-ignore
+*.[xy]ml* export-ignore
 /tests export-ignore
 .git* export-ignore
