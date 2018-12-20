@@ -11,8 +11,8 @@ use POMO\PO;
 use POMO\Translations\EntryTranslations;
 
 /**
- * @property string a90
- * @property string po_a90
+ * @property string $a90
+ * @property string $po_a90
  */
 class POTest extends POMOTestCase
 {

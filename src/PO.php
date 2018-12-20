@@ -341,6 +341,7 @@ class PO extends GettextTranslations
             return false;
         }
         $lineno = 0;
+        $res = false;
         while (true) {
             $res = $this->read_entry($f, $lineno);
             if (!$res) {

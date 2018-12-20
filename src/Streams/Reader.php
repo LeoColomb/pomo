@@ -8,9 +8,8 @@ namespace POMO\Streams;
 /**
  * Classes, which help reading streams of data from files.
  *
- * @property bool is_overloaded
- * @property int _pos
- *
+ * @property bool $is_overloaded
+ * @property int $_pos
  * @author Danilo Segan <danilo@kvota.net>
  */
 abstract class Reader implements StreamInterface

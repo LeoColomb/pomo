@@ -12,9 +12,9 @@ use POMO\Translations\EntryTranslations;
 use POMO\Translations\NOOPTranslations;
 
 /**
- * @property NOOPTranslations noop
- * @property EntryTranslations entry
- * @property EntryTranslations plural_entry
+ * @property NOOPTranslations $noop
+ * @property EntryTranslations $entry
+ * @property EntryTranslations $plural_entry
  */
 class NOOPTranslationsTest extends TestCase
 {

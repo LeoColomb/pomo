@@ -76,6 +76,7 @@ class PluralForms
      * Constructor.
      *
      * @param string $str PluralForms function (just the bit after `plural=` from Plural-Forms)
+     * @throws Exception
      */
     public function __construct($str)
     {
@@ -208,7 +209,7 @@ class PluralForms
                         $span = strspn($str, self::NUM_CHARS, $pos);
                         $output[] = array('value', intval(substr($str, $pos, $span)));
                         $pos += $span;
-                        continue;
+                        break;
                     }
 
                     throw new Exception(sprintf('Unknown symbol "%s"', $next));
@@ -229,12 +230,11 @@ class PluralForms
 
     /**
      * Get the plural form for a number.
-     *
      * Caches the value for repeated calls.
      *
      * @param int $num Number to get plural form for.
-     *
      * @return int PluralForms form value.
+     * @throws Exception
      */
     public function get($num)
     {

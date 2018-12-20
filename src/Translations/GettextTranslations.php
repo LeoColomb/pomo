@@ -13,8 +13,8 @@ use POMO\Parser\PluralForms;
 /**
  * Class for a set of entries for translation and their associated headers.
  *
- * @property mixed _nplurals
- * @property callable _gettext_select_plural_form
+ * @property mixed $_nplurals
+ * @property callable $_gettext_select_plural_form
  */
 class GettextTranslations extends Translations implements TranslationsInterface
 {
