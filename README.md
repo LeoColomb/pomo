@@ -1,11 +1,11 @@
-﻿POMO
+POMO
 ====
-[![Latest Release](https://img.shields.io/packagist/v/pomo/pomo.svg)](https://packagist.org/packages/pomo/pomo)
+
 [![Build Status](https://travis-ci.org/LeoColomb/pomo.svg?branch=master)](https://travis-ci.org/LeoColomb/pomo)
-[![Code Climate](https://img.shields.io/codeclimate/github/LeoColomb/pomo.svg)](https://codeclimate.com/github/LeoColomb/pomo)
+[![Latest Release](https://img.shields.io/packagist/v/pomo/pomo.svg)](https://packagist.org/packages/pomo/pomo)
 
 **Gettext library to translate with I18n**.  
-[Why use it](http://codex.wordpress.org/I18n_for_WordPress_Developers).
+[Why use it](https://codex.wordpress.org/I18n_for_WordPress_Developers).
 
 Usage
 -----
@@ -26,14 +26,9 @@ $translations->translate($text);
 Installation
 ------------
 The easiest way to install POMO is via [composer](http://getcomposer.org/).  
-Create the following `composer.json` file and run the `php composer.phar install` command to install it.
 
-```json
-{
-    "require": {
-        "pomo/pomo": "*"
-    }
-}
+```shell
+composer require pomo/pomo
 ```
 
 ```php
