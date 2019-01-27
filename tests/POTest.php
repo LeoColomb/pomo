@@ -52,7 +52,7 @@ class POTest extends POMOTestCase
     {
         $po = new PO();
         $this->assertEquals('baba', $po->unpoify('"baba"'));
-        $this->assertEquals("baba\ngugu", $po->unpoify('"baba\n"'."\t\t\t\n".'"gugu"'));
+        $this->assertEquals("baba\ngugu", $po->unpoify('"baba\n"' . "\t\t\t\n" . '"gugu"'));
         $this->assertEquals($this->a90, $po->unpoify($this->po_a90));
         $this->assertEquals('\\t\\n', $po->unpoify('"\\\\t\\\\n"'));
         // wordwrapped
@@ -169,7 +169,7 @@ msgstr[2] "бабаяга"', $po->export_entry($entry));
     public function test_import_from_file()
     {
         $po = new PO();
-        $res = $po->import_from_file(__DIR__.'/data/simple.po');
+        $res = $po->import_from_file(__DIR__ . '/data/simple.po');
         $this->assertEquals(true, $res);
 
         $this->assertEquals(array('Project-Id-Version' => 'pomo/pomo tests', 'Plural-Forms' => 'nplurals=2; plural=n != 1;'), $po->headers);
@@ -200,13 +200,13 @@ msgstr[2] "бабаяга"', $po->export_entry($entry));
     public function test_import_from_entry_file_should_give_false()
     {
         $po = new PO();
-        $this->assertFalse($po->import_from_file(__DIR__.'/data/empty.po'));
+        $this->assertFalse($po->import_from_file(__DIR__ . '/data/empty.po'));
     }
 
     public function test_import_from_file_with_windows_line_endings_should_work_as_with_unix_line_endings()
     {
         $po = new PO();
-        $this->assertTrue($po->import_from_file(__DIR__.'/data/windows-line-endings.po'));
+        $this->assertTrue($po->import_from_file(__DIR__ . '/data/windows-line-endings.po'));
         $this->assertEquals(1, count($po->entries));
     }
 

@@ -49,7 +49,7 @@ abstract class Reader implements StreamInterface
         }
         $endian_letter = ('big' == $this->endian) ? 'N' : 'V';
 
-        return unpack($endian_letter.$count, $bytes);
+        return unpack($endian_letter . $count, $bytes);
     }
 
     public function substr($string, $start, $length)

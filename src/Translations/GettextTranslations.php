@@ -103,7 +103,7 @@ class GettextTranslations extends Translations implements TranslationsInterface
                     $res .= ') : (';
                     break;
                 case ';':
-                    $res .= str_repeat(')', $depth).';';
+                    $res .= str_repeat(')', $depth) . ';';
                     $depth = 0;
                     break;
                 default:

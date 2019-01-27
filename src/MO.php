@@ -146,7 +146,7 @@ class MO extends GettextTranslations
         $reader = new NOOPReader();
 
         foreach ($entries as $entry) {
-            $originals_table .= $this->export_original($entry).chr(0);
+            $originals_table .= $this->export_original($entry) . chr(0);
             $length = $reader->strlen($this->export_original($entry));
             fwrite($fh, pack('VV', $length, $current_addr));
             $current_addr += $length + 1; // account for the NULL byte after
@@ -159,10 +159,10 @@ class MO extends GettextTranslations
             $current_addr
         ));
         $current_addr += strlen($exported_headers) + 1;
-        $translations_table = $exported_headers.chr(0);
+        $translations_table = $exported_headers . chr(0);
 
         foreach ($entries as $entry) {
-            $translations_table .= $this->export_translations($entry).chr(0);
+            $translations_table .= $this->export_translations($entry) . chr(0);
             $length = $reader->strlen($this->export_translations($entry));
             fwrite($fh, pack('VV', $length, $current_addr));
             $current_addr += $length + 1;
@@ -184,10 +184,10 @@ class MO extends GettextTranslations
         //TODO: warnings for control characters
         $exported = $entry->singular;
         if ($entry->is_plural) {
-            $exported .= chr(0).$entry->plural;
+            $exported .= chr(0) . $entry->plural;
         }
         if (!is_null($entry->context)) {
-            $exported = $entry->context.chr(4).$exported;
+            $exported = $entry->context . chr(4) . $exported;
         }
 
         return $exported;
@@ -225,10 +225,10 @@ class MO extends GettextTranslations
     public function get_byteorder($magic)
     {
         // The magic is 0x950412de
-        $magic_little = (int) -1794895138;
+        $magic_little = (int) - 1794895138;
         $magic_little_64 = (int) 2500072158;
         // 0xde120495
-        $magic_big = ((int) -569244523) & 0xFFFFFFFF;
+        $magic_big = ((int) - 569244523) & 0xFFFFFFFF;
         if ($magic_little == $magic || $magic_little_64 == $magic) {
             return 'little';
         } elseif ($magic_big == $magic) {

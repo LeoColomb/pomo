@@ -18,7 +18,7 @@ abstract class POMOTestCase extends TestCase
      */
     public function temp_filename()
     {
-        $tmp_dir = realpath(__DIR__.'/data');
+        $tmp_dir = realpath(__DIR__ . '/data');
 
         return tempnam($tmp_dir, 'pomo');
     }

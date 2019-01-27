@@ -37,7 +37,7 @@ class PO extends GettextTranslations
         $poified = self::poify($header_string);
         if ($this->comments_before_headers) {
             $before_headers = self::prepend_each_line(
-                rtrim($this->comments_before_headers)."\n",
+                rtrim($this->comments_before_headers) . "\n",
                 '# '
             );
         } else {
@@ -57,7 +57,7 @@ class PO extends GettextTranslations
     {
         //TODO: sorting
         return implode("\n\n", array_map(
-            array(__NAMESPACE__.'\PO', 'export_entry'),
+            array(__NAMESPACE__ . '\PO', 'export_entry'),
             $this->entries
         ));
     }
@@ -145,10 +145,10 @@ class PO extends GettextTranslations
             $string
         );
 
-        $po = $quote.implode(
+        $po = $quote . implode(
             "${slash}n$quote$newline$quote",
             explode($newline, $string)
-        ).$quote;
+        ) . $quote;
         // add empty string on first line for readbility
         if (false !== strpos($string, $newline) &&
                 (substr_count($string, $newline) > 1 ||
@@ -172,7 +172,7 @@ class PO extends GettextTranslations
     {
         $escapes = array('t' => "\t", 'n' => "\n", 'r' => "\r", '\\' => '\\');
         $lines = array_map('trim', explode("\n", $string));
-        $lines = array_map(array(__NAMESPACE__.'\PO', 'trim_quotes'), $lines);
+        $lines = array_map(array(__NAMESPACE__ . '\PO', 'trim_quotes'), $lines);
         $unpoified = '';
         $previous_is_backslash = false;
         foreach ($lines as $line) {
@@ -219,11 +219,11 @@ class PO extends GettextTranslations
             $append = "\n";
         }
         foreach ($lines as &$line) {
-            $line = $with.$line;
+            $line = $with . $line;
         }
         unset($line);
 
-        return implode("\n", $lines).$append;
+        return implode("\n", $lines) . $append;
     }
 
     /**
@@ -272,23 +272,23 @@ class PO extends GettextTranslations
             $po[] = self::comment_block(implode(', ', $entry->flags), ',');
         }
         if (!is_null($entry->context)) {
-            $po[] = 'msgctxt '.self::poify($entry->context);
+            $po[] = 'msgctxt ' . self::poify($entry->context);
         }
-        $po[] = 'msgid '.self::poify($entry->singular);
+        $po[] = 'msgid ' . self::poify($entry->singular);
         if (!$entry->is_plural) {
             $translation = empty($entry->translations) ?
                 '' :
                 $entry->translations[0];
             $translation = self::match_begin_and_end_newlines($translation, $entry->singular);
-            $po[] = 'msgstr '.self::poify($translation);
+            $po[] = 'msgstr ' . self::poify($translation);
         } else {
-            $po[] = 'msgid_plural '.self::poify($entry->plural);
+            $po[] = 'msgid_plural ' . self::poify($entry->plural);
             $translations = empty($entry->translations) ?
                 array('', '') :
                 $entry->translations;
             foreach ($translations as $i => $translation) {
                 $translation = self::match_begin_and_end_newlines($translation, $entry->plural);
-                $po[] = "msgstr[$i] ".self::poify($translation);
+                $po[] = "msgstr[$i] " . self::poify($translation);
             }
         }
 
@@ -313,7 +313,7 @@ class PO extends GettextTranslations
         $translation_end = "\n" === substr($translation, -1);
         if ($original_begin) {
             if (!$translation_begin) {
-                $translation = "\n".$translation;
+                $translation = "\n" . $translation;
             }
         } elseif ($translation_begin) {
             $translation = ltrim($translation, "\n");
@@ -531,7 +531,7 @@ class PO extends GettextTranslations
         }
         $line = $use_last_line ? $last_line : fgets($f);
         $line = ("\r\n" == substr($line, -2)) ?
-            rtrim($line, "\r\n")."\n" :
+            rtrim($line, "\r\n") . "\n" :
             $line;
         $last_line = $line;
         $use_last_line = false;
@@ -554,7 +554,7 @@ class PO extends GettextTranslations
             );
         } elseif ('#.' == $first_two) {
             $entry->extracted_comments = trim(
-                $entry->extracted_comments."\n".$comment
+                $entry->extracted_comments . "\n" . $comment
             );
         } elseif ('#,' == $first_two) {
             $entry->flags = array_merge(
@@ -563,7 +563,7 @@ class PO extends GettextTranslations
             );
         } else {
             $entry->translator_comments = trim(
-                $entry->translator_comments."\n".$comment
+                $entry->translator_comments . "\n" . $comment
             );
         }
     }

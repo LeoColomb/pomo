@@ -16,7 +16,7 @@ class MOTest extends POMOTestCase
     public function test_mo_simple()
     {
         $mo = new MO();
-        $mo->import_from_file(__DIR__.'/data/simple.mo');
+        $mo->import_from_file(__DIR__ . '/data/simple.mo');
         $this->assertEquals(2, count($mo->entries));
         $this->assertEquals(array('dyado'), $mo->entries['baba']->translations);
         $this->assertEquals(array('yes'), $mo->entries["kuku\nruku"]->translations);
@@ -25,7 +25,7 @@ class MOTest extends POMOTestCase
     public function test_mo_plural()
     {
         $mo = new MO();
-        $mo->import_from_file(__DIR__.'/data/plural.mo');
+        $mo->import_from_file(__DIR__ . '/data/plural.mo');
         $this->assertEquals(1, count($mo->entries));
         $this->assertEquals(array('oney dragoney', 'twoey dragoney', 'manyey dragoney', 'manyeyey dragoney', 'manyeyeyey dragoney'), $mo->entries['one dragon']->translations);
 
@@ -52,7 +52,7 @@ class MOTest extends POMOTestCase
     public function test_mo_context()
     {
         $mo = new MO();
-        $mo->import_from_file(__DIR__.'/data/context.mo');
+        $mo->import_from_file(__DIR__ . '/data/context.mo');
         $this->assertEquals(2, count($mo->entries));
         $plural_entry = new EntryTranslations(array('singular' => 'one dragon', 'plural' => '%d dragons', 'translations' => array('oney dragoney', 'twoey dragoney', 'manyey dragoney'), 'context' => 'dragonland'));
         $this->assertEquals($plural_entry, $mo->entries[$plural_entry->key()]);
@@ -127,7 +127,7 @@ class MOTest extends POMOTestCase
     public function test_nplurals_with_backslashn()
     {
         $mo = new MO();
-        $mo->import_from_file(__DIR__.'/data/bad_nplurals.mo');
+        $mo->import_from_file(__DIR__ . '/data/bad_nplurals.mo');
         $this->assertEquals('%d foro', $mo->translate_plural('%d forum', '%d forums', 1));
         $this->assertEquals('%d foros', $mo->translate_plural('%d forum', '%d forums', 2));
         $this->assertEquals('%d foros', $mo->translate_plural('%d forum', '%d forums', -1));
@@ -137,24 +137,24 @@ class MOTest extends POMOTestCase
     {
         $start = microtime(true);
         $mo = new MO();
-        $mo->import_from_file(__DIR__.'/data/de_DE-2.8.mo');
+        $mo->import_from_file(__DIR__ . '/data/de_DE-2.8.mo');
         // echo "\nPerformance: ".(microtime(true) - $start)."\n";
     }
 
     public function test_overloaded_mb_functions()
     {
         if ((ini_get('mbstring.func_overload') & 2) == 0) {
-            $this->markTestSkipped(__METHOD__.' only runs when mbstring.func_overload is enabled.');
+            $this->markTestSkipped(__METHOD__ . ' only runs when mbstring.func_overload is enabled.');
         }
 
         $mo = new MO();
-        $mo->import_from_file(__DIR__.'/data/overload.mo');
+        $mo->import_from_file(__DIR__ . '/data/overload.mo');
         $this->assertEquals(array('Табло'), $mo->entries['Dashboard']->translations);
     }
 
     public function test_load_pot_file()
     {
         $mo = new MO();
-        $this->assertEquals(false, $mo->import_from_file(__DIR__.'/data/mo.pot'));
+        $this->assertEquals(false, $mo->import_from_file(__DIR__ . '/data/mo.pot'));
     }
 }
