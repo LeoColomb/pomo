@@ -1,5 +1,6 @@
 {
   "name": "pomo/pomo",
+  "type": "library",
   "description": "Gettext library to translate with I18n",
   "keywords": [
     "gettext",
@@ -9,7 +10,6 @@
     "I18n"
   ],
   "homepage": "https://github.com/LeoColomb/pomo",
-  "type": "library",
   "license": "GPL-2.0+",
   "authors": [
     {
@@ -23,20 +23,8 @@
       "role": "Maintainer"
     }
   ],
-  "support": {
-    "issues": "https://github.com/LeoColomb/pomo/issues"
-  },
   "require": {
     "php": ">=5.3.0"
-  },
-  "scripts": {
-    "test": [
-      "phpunit"
-    ],
-    "analysis": [
-      "phpcs",
-      "phpstan analyse src tests --level 1"
-    ]
   },
   "require-dev": {
     "phpunit/phpunit": ">=4.0",
@@ -51,5 +39,17 @@
     "psr-4": {
       "POMO\\Tests\\": "tests"
     }
+  },
+  "scripts": {
+    "analysis": [
+      "phpcs",
+      "phpstan analyse src tests --level 1"
+    ],
+    "test": [
+      "phpunit"
+    ]
+  },
+  "support": {
+    "issues": "https://github.com/LeoColomb/pomo/issues"
   }
 }
