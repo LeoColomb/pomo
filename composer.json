@@ -47,6 +47,9 @@
     ],
     "test": [
       "phpunit"
+    ],
+    "format": [
+      "phpcbf"
     ]
   },
   "support": {

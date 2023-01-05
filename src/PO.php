@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the POMO package.
  *
@@ -150,9 +151,11 @@ class PO extends GettextTranslations
             explode($newline, $string)
         ) . $quote;
         // add empty string on first line for readbility
-        if (false !== strpos($string, $newline) &&
+        if (
+            false !== strpos($string, $newline) &&
                 (substr_count($string, $newline) > 1 ||
-                !($newline === substr($string, -strlen($newline))))) {
+                !($newline === substr($string, -strlen($newline))))
+        ) {
             $po = "$quote$quote$newline$po";
         }
         // remove empty strings
@@ -442,9 +445,11 @@ class PO extends GettextTranslations
                     $lineno--;
                     break;
                 }
-                if ($context &&
+                if (
+                    $context &&
                     $context != 'msgctxt' &&
-                    $context != 'comment') {
+                    $context != 'comment'
+                ) {
                     return false;
                 }
                 $context = 'msgid';
