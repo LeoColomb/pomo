@@ -51,7 +51,7 @@ class PO extends GettextTranslations
     public function export_entries()
     {
         // TODO: Sorting.
-        return implode("\n\n", array_map(array('PO', 'export_entry'), $this->entries));
+        return implode("\n\n", array_map(array(__NAMESPACE__ . '\PO', 'export_entry'), $this->entries));
     }
 
     /**
