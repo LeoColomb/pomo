@@ -5,7 +5,7 @@ name: CI
 on:
   push:
     branches:
-      - '*'
+      - main
     tags:
       - '*'
   pull_request:
@@ -14,7 +14,7 @@ on:
 
 jobs:
   test:
-    name: Composer
+    name: Test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
