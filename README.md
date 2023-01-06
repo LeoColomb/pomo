@@ -1,14 +1,15 @@
-POMO
-====
+# POMO
 
-[![Build Status](https://travis-ci.org/LeoColomb/pomo.svg?branch=master)](https://travis-ci.org/LeoColomb/pomo)
+> Gettext library to translate with i18n
+
 [![Latest Release](https://img.shields.io/packagist/v/pomo/pomo.svg)](https://packagist.org/packages/pomo/pomo)
 
-**Gettext library to translate with I18n**.  
+## About
+
 [Why use it](https://codex.wordpress.org/I18n_for_WordPress_Developers).
 
-Usage
------
+## Usage
+
 ```php
 <?php
 use POMO\MO;
@@ -23,25 +24,28 @@ $translations->import_from_file($the_mo_filepath);
 $translations->translate($text);
 ```
 
-Installation
-------------
+## Installation
+
 The easiest way to install POMO is via [composer](http://getcomposer.org/).  
 
-```shell
+```console
 composer require pomo/pomo
 ```
 
 ```php
 <?php
+
 require 'vendor/autoload.php';
+
 use POMO\MO;
-...
+
+[...]
 ```
 
-Requirements
-------------
+## Requirements
+
 POMO works with PHP 5.3 or above.
 
-License
--------
+## License
+
 POMO is licensed under the [GPLv2 License](LICENSE).

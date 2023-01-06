@@ -1,0 +1,72 @@
+# https://docs.github.com/actions
+
+name: CI
+
+on:
+  push:
+    branches:
+      - '*'
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Composer
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - '5.6'
+          - '7.0'
+          - '7.1'
+          - '7.2'
+          - '7.3'
+          - '7.3'
+          - '7.4'
+          - '8.0'
+          - '8.1'
+          - '8.2'
+          - latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: phpunit
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache Composer packages
+        uses: actions/cache@v3
+        id: actions-cache
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Install Composer packages
+        run: composer install --no-scripts --prefer-dist
+
+      - name: Execute Unit tests via PHPUnit
+        run: phpunit --testdox --colors=always
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: latest
+          tools: phpcs, cs2pr, phpstan
+
+      - name: Execute Code Sniffer via phpcs
+        run: composer run analysis
