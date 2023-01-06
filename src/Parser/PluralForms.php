@@ -90,9 +90,9 @@ class PluralForms
      * Uses the shunting-yard algorithm to convert the string to Reverse Polish
      * Notation tokens.
      *
-     * @param string $str String to parse.
+     * @throws Exception If there is a syntax or parsing error with the string.
      *
-     * @throws Exception
+     * @param string $str String to parse.
      */
     protected function parse($str)
     {
@@ -231,6 +231,7 @@ class PluralForms
 
     /**
      * Get the plural form for a number.
+     *
      * Caches the value for repeated calls.
      *
      * @param int $num Number to get plural form for.
@@ -249,10 +250,9 @@ class PluralForms
     /**
      * Execute the plural form function.
      *
+     * @throws Exception If the plural form value cannot be calculated.
+     *
      * @param int $n Variable "n" to substitute.
-     *
-     * @throws Exception
-     *
      * @return int PluralForms form value.
      */
     public function execute($n)

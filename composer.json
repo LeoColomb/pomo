@@ -1,13 +1,13 @@
 {
   "name": "pomo/pomo",
   "type": "library",
-  "description": "Gettext library to translate with I18n",
+  "description": "Gettext library to translate with i18n",
   "keywords": [
     "gettext",
     "translation",
     "localization",
     "internationalization",
-    "I18n"
+    "i18n"
   ],
   "homepage": "https://github.com/LeoColomb/pomo",
   "license": "GPL-2.0+",
