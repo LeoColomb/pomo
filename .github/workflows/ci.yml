@@ -14,7 +14,7 @@ on:
 
 jobs:
   test:
-    name: Composer
+    name: Test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
